@@ -1,0 +1,14 @@
+{
+  "label": "adults",
+  "range": ["1/365  ", "3"],
+  "items": [
+    {
+      "name": "One",
+      "items": ["1/365", "2/12", "3/12", ["1+2/12", "3"], { "items": [5, 7] }]
+    },
+    {
+      "name": "Two",
+      "items": ["1/12", "5/12", { "label": "Only for choosen", "items": [1, 5] }]
+    }
+  ]
+}
