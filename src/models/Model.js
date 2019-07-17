@@ -1,5 +1,5 @@
 export default class Model {
-  static defaults() {
+  defaults() {
     return {};
   }
 

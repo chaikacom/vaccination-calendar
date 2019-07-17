@@ -14,8 +14,6 @@ import Row from '../models/Row';
 
 const row = new Row(adults.items[0]);
 
-console.log(row);
-
 export default {
   data() {
     return {
