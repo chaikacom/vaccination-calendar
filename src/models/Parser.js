@@ -44,7 +44,7 @@ export default class Parser {
     } else if (Array.isArray(item)) {
       date = item.map(i => this.parseItem(i));
     } else if (item.items !== undefined) {
-      label = item.label;
+      label = item.label || label;
       date = this.parseItems(item.items);
     }
     return new Cell({ label, date });
