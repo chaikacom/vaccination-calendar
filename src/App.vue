@@ -8,6 +8,7 @@
 import * as d3 from 'd3';
 import adults from './data/adults.json';
 import Parser from './models/Parser';
+import Timeline from './models/Timeline';
 
 export default {
   name: 'app',
@@ -21,9 +22,14 @@ export default {
 
   mounted() {
     const parsed = Parser.parseData(adults);
-    console.log(parsed);
-//    const grid = d3.select(this.$refs.grid);
-    // const timeline = grid.append('tr').selectAll('td').data()
+    const dates = parsed.reduce((acc, row) => acc.concat(row.getAllDates()), []);
+    const timeline = new Timeline({ dates });
+
+    const table = d3.select('.grid')
+
+    table.append('tr').selectAll('td').data(timeline.dates).enter().append('td').text((d) => {
+      return Parser.dateToText(d.term);
+    })
   },
 };
 </script>

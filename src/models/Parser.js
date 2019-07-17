@@ -56,6 +56,13 @@ export default class Parser {
       date = this.constructor.parseAge(age);
     }
     const value = Number(date.years) + Number(date.months) / 12 + Number(date.days) / 365;
-    return value;
+    return Math.round(value * 100) / 100;
+  }
+
+  static dateToText(date) {
+    const years = date.years ? date.years + ' лет' : null;
+    const months = date.months ? date.months + ' мес.' : null;
+    const days = date.days ? date.days + ' дн.' : null;
+    return [years, months, days].filter(item => !!item).join(' ');
   }
 }
