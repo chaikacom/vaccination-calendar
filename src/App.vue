@@ -1,138 +1,192 @@
 <template>
   <div id="app">
+    <div class="grid">
+      <div class="grid__head">
+        <div class="grid__head-cell" v-if="data.icons"></div>
+        <div class="grid__head-cell"></div>
+        <div class="grid__head-cell" v-for="item in head">
+          <div class="grid__head-box" v-html="item"></div>
+        </div>
+      </div>
 
-    <!--<div class="screen">-->
-      <!--<div class="screen__left">left</div>-->
-      <!--<div class="screen__main">-->
-        <!--<div class="screen__top">-->
-          <!--<div class="screen__header" v-sync-scroll="'grid'">-->
-            <!--<timeline :items="items"></timeline>-->
-          <!--</div>-->
-        <!--</div>-->
-        <!--<div class="screen__center" v-sync-scroll="'grid'" @scroll="onScroll">-->
-          <!--<div class="screen__center-content">-->
-            <!--<grid ref="grid"></grid>-->
-            <!--Lorem ipsum dolor sit amet, consectetur adipisicing elit. Accusamus ea magnam magni minima molestias quidem sed unde veniam voluptas voluptates! Amet eveniet in iste, provident suscipit vitae. Dicta eius explicabo ipsam itaque quod reiciendis rerum tenetur ut vel vero! Aut illo iusto nemo obcaecati quas quod ratione temporibus unde velit voluptatibus. Accusamus aut beatae blanditiis consectetur dolore dolorem eligendi fugiat ipsam iste itaque, iusto magni natus nesciunt odio perspiciatis quis quisquam ratione ullam? Ab dolorem doloremque dolores ducimus et ipsam iste nobis perspiciatis quae, voluptates. Quod, rem, voluptas! Aliquam atque autem delectus dolore doloribus est, facilis fugit, inventore magnam nesciunt nobis obcaecati odio omnis placeat qui, reiciendis repellendus saepe sapiente suscipit voluptates. Placeat ut, veritatis. Accusantium aperiam, beatae cupiditate dignissimos dolorem ducimus eaque esse, est expedita illo libero maxime mollitia nostrum omnis placeat porro praesentium quae quia ratione rerum sed vel voluptatibus voluptatum? Animi doloremque eveniet, fuga ipsam neque officiis perspiciatis praesentium quam quas, quisquam quo tempore temporibus unde ut voluptate. Ab ad alias aspernatur commodi delectus dicta ea earum mollitia non, officia reprehenderit sapiente tempora voluptates. Adipisci consectetur inventore maxime quam quibusdam quod, quos sint. Amet at beatae consectetur corporis deleniti deserunt exercitationem iure nobis sint unde? Accusantium at corporis distinctio ea illum in ipsa iste laborum, laudantium natus optio perspiciatis, quas saepe veniam voluptate. Autem consequuntur dicta ea est eum hic modi omnis saepe, tenetur! Alias amet aperiam atque consequatur dicta eveniet explicabo impedit ipsum laudantium maxime, quaerat quod saepe sequi sint voluptatibus. Dolorem eaque eligendi in iusto magni maxime odit possimus quam repellendus reprehenderit! Cumque laborum necessitatibus nihil nostrum numquam repudiandae, vero? A ad atque deleniti dicta dignissimos dolores ducimus excepturi illo itaque iusto maxime molestiae molestias, nesciunt quasi quibusdam quidem quod sed sint tempore totam unde velit voluptas. Ea eius eos et id iste nobis placeat ut vero. Accusamus consequatur dolor eligendi explicabo fuga ipsum maxime porro reiciendis saepe suscipit. Aliquam animi at beatae consectetur corporis cumque cupiditate debitis dignissimos dolor doloremque ea eius eligendi error est excepturi fuga fugiat laborum laudantium nam odio optio perferendis placeat qui, quia quidem quod recusandae repellendus sequi, similique suscipit ullam veritatis vitae voluptas? Mollitia numquam, pariatur. Alias debitis ipsam necessitatibus nisi quisquam reiciendis, sit soluta. Ab accusamus amet assumenda consequatur cupiditate dolorem, ex, hic illum ipsum iure nulla omnis optio pariatur provident sit, tempora temporibus! Aliquam beatae consequatur consequuntur corporis culpa, est exercitationem facilis hic ipsa ipsam, itaque iure iusto magnam magni molestias non obcaecati officia porro, possimus rem repellat ut voluptatem voluptatibus! Assumenda aut consequuntur culpa dignissimos dolore earum ex expedita fugit harum, in iste natus odio officia placeat praesentium quam quo, sint temporibus, tenetur velit? Maxime modi necessitatibus obcaecati officia perspiciatis quaerat quia similique. Amet eaque ipsam mollitia nam reiciendis. Commodi deserunt dignissimos excepturi magnam nulla quisquam ut voluptatem! Accusantium consequuntur dignissimos dolore eligendi error eveniet id illo impedit iste iure labore laborum magni nihil non pariatur perferendis porro possimus reiciendis, repellendus reprehenderit similique soluta suscipit velit. Earum eos molestias necessitatibus nemo nihil qui recusandae rerum voluptas.-->
-          <!--</div>-->
-        <!--</div>-->
-        <!--<div class="screen__bottom">-->
-          <!--&lt;!&ndash;<scrollbar :length="scrollbar.length" :offset="scrollbar.offset"></scrollbar>&ndash;&gt;-->
-        <!--</div>-->
-      <!--</div>-->
-    <!--</div>-->
-
-    <!--<div id="test" ref="test">-->
-      <!--<span style="white-space: nowrap">-->
-        <!--Lorem ipsum dolor sit amet, consectetur adipisicing elit. A aliquam asperiores, assumenda consequatur consequuntur facere id itaque iusto magni nam, odio odit possimus quaerat quos sed soluta veritatis! Ducimus est, fugiat in ipsum quasi tempora vel voluptate. Ex nihil, optio. Ad beatae commodi et in, nostrum quibusdam quisquam rem similique!-->
-      <!--</span>-->
-    <!--</div>-->
-
-    <div class="wrapper" style="width: 960px;">
-      <sticky-table></sticky-table>
+      <div class="grid__body">
+        <div class="grid__row">
+          <div class="grid__body-cell grid__body-icons" v-if="data.icons"></div>
+          <div class="grid__body-cell grid__row-spacer"></div>
+          <div class="grid__body-cell grid__body-value grid__row-spacer" v-for="item in head"></div>
+        </div>
+        <div class="grid__row" v-for="row in rows">
+          <div class="grid__body-cell grid__body-icons" v-if="data.icons">
+            <template v-if="row.icons">
+              <img :src="require(`./assets/images/${icon.image}.svg`)"
+                   :alt="icon.name"
+                   :title="icon.name"
+                   v-for="icon in getIcons(row.icons)">
+            </template>
+          </div>
+          <div class="grid__body-cell grid__body-name">
+            {{ row.name }}
+            <span class="sup" v-if="row.note">{{ row.note }}</span>
+          </div>
+          <div class="grid__body-cell grid__body-value" v-for="item in getItems(row.items)">
+            <span :class="getCellClassName(item)"></span>
+          </div>
+        </div>
+      </div>
     </div>
-
   </div>
 </template>
 
 <script>
-import adults from './data/adults.json'
-import Names from './components/RowNames.vue';
-import Grid from './components/Grid.vue';
-import Timeline from './components/Timeline.vue';
-import Scrollbar from './components/Scrollbar.vue';
-import Parser from './models/Parser';
-import StickyTable from './components/StickyTable.vue';
-import Simplebar from 'simplebar';
-import 'simplebar/dist/simplebar.min.css';
 import 'normalize.css';
 import './assets/stylesheets/index.scss';
+import data from './data/adults-simple.json';
 
+const ICONS = [
+  { code: 'WORK_INFECT', image: 'work', name: 'Работающие в условиях, связанных с риском заражения' },
+  { code: 'LIVE_TERR', image: 'location', name: 'Проживающие на территориях с высоким уровнем заболеваемости (риска заболеваемости) данными инфекциями' },
+  { code: 'VISIT_TERR', image: 'travel', name: 'Выезжающие на территории с высоким уровнем заболеваемости (риска заболеваемости) данными инфекциями' },
+  { code: 'WAR', image: 'army', name: 'Лица, подлежащие призыву на военную службу' },
+  { code: 'CONTACTS', image: 'infection', name: 'Контактные лица в очагах инфекции или при угрозе возникновения вспышки' },
+  { code: 'CHRON', image: 'health', name: 'При наличии хронических заболеваний или других состояний здоровья' },
+]
 
 export default {
   name: 'app',
-  components: { Names, Grid, Timeline, Scrollbar, StickyTable },
+  components: {},
 
   data() {
     return {
-      names: adults.items.map(row => row.name),
-      items: [1,2],
-      scrollbar: {}
+      data,
     };
   },
 
+  computed: {
+    head() {
+      return this.data.timeline;
+    },
+    rows() {
+      return this.data.items;
+    },
+  },
+
   mounted() {
-//    this.items = this.$refs.grid.timeline.dates.map(date => {
-//      return Parser.dateToText(date.term);
-//    });
-//    new Simplebar(this.$refs.test);
   },
 
   methods: {
-    onScroll(e) {
-      const el = e.target;
-      const left = el.scrollLeft;
-      const w = el.scrollWidth;
-      const viewport = el.parentNode.offsetWidth;
-      const length = Math.round(viewport/w * 100);
-      const offset = Math.round(left / w * 100);
-      this.scrollbar = { length, offset };
+    getItems(items) {
+      return items.split(' ');
+    },
+    getCellClassName(item) {
+      let className;
+      if (item === 'o') className = 'dot';
+      if (item === 'ld') className = 'line line--dark';
+      if (item === 'll') className = 'line line--light';
+      if (item === 'fl') className = 'from from--light';
+      if (item === 'fd') className = 'from from--dark';
+      if (item === 'tl') className = 'to to--light';
+      if (item === 'td') className = 'to to--dark';
+      if (item === 'fpd') className = 'from from--prev from--dark';
+      if (item === 'fpl') className = 'from from--pref from--light';
+      if (item === 'tnl') className = 'to to--next to--light';
+      if (item === 'tnd') className = 'to to--next to--dark';
+      return className;
+    },
+
+    getIcons(icons) {
+      const items = icons.split(' ').reduce((acc, code) => {
+        const icon = ICONS.find(i => i.code === code);
+        if (!icon) return;
+        acc.push({ image: icon.image, name: icon.name });
+        return acc;
+      }, []);
+      return items;
     }
-  }
+  },
 };
 </script>
 
 <style lang="scss">
-  $left-width: 300px;
+  @import "./assets/stylesheets/base/index";
 
-  * {
-    box-sizing: border-box;
+  $cell-width: 90px;
+
+  .sup {
+    position: absolute;
+    vertical-align: super;
+    font-size: 0.7em;
+    margin-left: 0.5em;
+    margin-top: -0.15em;
   }
 
-  .screen {
+  .grid {
+    display: table;
+    font-family: $font-regular;
+    color: $color-text;
+  }
+  .grid__head {
+    display: table-row;
+  }
+  .grid__head-cell {
+    display: table-cell;
+    width: $cell-width;
+    text-align: center;
+    vertical-align: top;
+    padding: 0 9px;
+  }
+
+  .grid__head-box {
+    border: 1px solid $color-border;
+    border-radius: 25px;
+    height: 50px;
+    padding: 0 5px;
     display: flex;
-    width: 900px;
+    align-items: center;
+    text-align: center;
+    justify-content: center;
+    line-height: 1em;
   }
 
-  .screen__left {
-    padding: 10px;
-    flex: 0 0 $left-width;
+  .grid__row-spacer {
+    height: 25px;
+    padding: 0;
   }
 
-  .screen__main {
-    flex: 1 1 auto;
-    max-width: 100%;
+  .grid__body {
+    display: table-row-group;
   }
 
-  .screen__top {
-    position: sticky;
-    top: 0;
-    padding: 10px 0;
-    background: #fff;
-    overflow: hidden;
+  .grid__row {
+    display: table-row;
   }
 
-  .screen__center {
-    overflow: auto;
-    width: 100%;
-    transform: translateY(18px);
+  .grid__body-cell {
+    display: table-cell;
+    vertical-align: middle;
+    width: $cell-width;
+    padding: 8px 0;
   }
 
-  .screen__bottom {
-    position: sticky;
-    bottom: 0;
-    padding: 20px 0;
-    background: #fff;
+  .grid__body-icons {
+    white-space: nowrap;
+    padding-right: 15px;
+    text-align: right;
+    & * {
+      margin-right: 7px;
+      &:last-child {
+        margin-right: 0;
+      }
+    }
   }
 
-  .screen__header {
-    overflow: auto;
-    margin-bottom: -30px;
+  .grid__body-name {
+    padding-right: 10px;
   }
 
-  #test {
-    position: relative;
-    overflow: auto;
-    width: 400px;
-    height: 500px;
+  .grid__body-value {
+    background-image: url('./assets/images/dot.jpg');
+    background-position: 50% 0;
+    background-repeat: repeat-y;
+    text-align: center;
   }
 </style>

@@ -1,0 +1,31 @@
+{
+  "timeline": ["Первые <br> 24 часа", "3-7 <br> день", "1 <br> месяц", "2 <br> месяца", "3 <br> месяца", "4,5 <br> месяца", "6 <br> месяцев", "9 <br> месяцев", "12 <br> месяцев"],
+  "icons": true,
+  "items": [
+    {
+      "icons": "WORK_INFECT LIVE_TERR VISIT_TERR WAR CONTACTS CHRON",
+      "note": 1,
+      "name": "Гепатит В",
+      "items": "o - o - - - o - -"
+    },
+    {
+      "name": "Туберкулез",
+      "items": "- o - - - - - - -"
+    },
+    {
+      "icons": "LIVE_TERR WAR CONTACTS",
+      "name": "Пневмококковая инфекция",
+      "items": "- - - o - o - - -"
+    },
+    {
+      "name": "Грипп",
+      "items": "- - - - - - fd ld tnd"
+    },
+    {
+      "icons": "WORK_INFECT CHRON",
+      "note": "5, 6",
+      "name": "Ротавирусная инфекция",
+      "items": "- - - fpl ll ll ll ll tnl"
+    }
+  ]
+}
