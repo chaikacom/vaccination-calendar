@@ -1,46 +1,14 @@
 <template>
   <div id="app">
-    <div class="grid">
-      <div class="grid__head">
-        <div class="grid__head-cell" v-if="data.icons"></div>
-        <div class="grid__head-cell"></div>
-        <div class="grid__head-cell" v-for="item in head">
-          <div class="grid__head-box" v-html="item"></div>
-        </div>
-      </div>
-
-      <div class="grid__body">
-        <div class="grid__row">
-          <div class="grid__body-cell grid__body-icons" v-if="data.icons"></div>
-          <div class="grid__body-cell grid__row-spacer"></div>
-          <div class="grid__body-cell grid__body-value grid__row-spacer" v-for="item in head"></div>
-        </div>
-        <div class="grid__row" v-for="row in rows">
-          <div class="grid__body-cell grid__body-icons" v-if="data.icons">
-            <template v-if="row.icons">
-              <img :src="require(`./assets/images/${icon.image}.svg`)"
-                   :alt="icon.name"
-                   :title="icon.name"
-                   v-for="icon in getIcons(row.icons)">
-            </template>
-          </div>
-          <div class="grid__body-cell grid__body-name">
-            {{ row.name }}
-            <span class="sup" v-if="row.note">{{ row.note }}</span>
-          </div>
-          <div class="grid__body-cell grid__body-value" v-for="item in getItems(row.items)">
-            <span :class="getCellClassName(item)"></span>
-          </div>
-        </div>
-      </div>
-    </div>
+    <svg id="svg"></svg>
   </div>
 </template>
 
 <script>
 import 'normalize.css';
 import './assets/stylesheets/index.scss';
-import data from './data/adults-simple.json';
+// import data from './data/adults-simple.json';
+import * as d3 from 'd3';
 
 const ICONS = [
   { code: 'WORK_INFECT', image: 'work', name: 'Работающие в условиях, связанных с риском заражения' },
@@ -49,59 +17,110 @@ const ICONS = [
   { code: 'WAR', image: 'army', name: 'Лица, подлежащие призыву на военную службу' },
   { code: 'CONTACTS', image: 'infection', name: 'Контактные лица в очагах инфекции или при угрозе возникновения вспышки' },
   { code: 'CHRON', image: 'health', name: 'При наличии хронических заболеваний или других состояний здоровья' },
-]
+];
+
+const data = {
+  headers: [1, 2, 3, 4, 5, 6, 7, 8, 9, 10],
+  items: [
+    [4, 5, 9],
+    [[1, 150]],
+  ],
+};
 
 export default {
   name: 'app',
   components: {},
-
-  data() {
-    return {
-      data,
-    };
-  },
-
-  computed: {
-    head() {
-      return this.data.timeline;
-    },
-    rows() {
-      return this.data.items;
-    },
-  },
-
   mounted() {
-  },
+    const svg = d3.select('#svg');
+    const ctx = svg.node();
 
-  methods: {
-    getItems(items) {
-      return items.split(' ');
-    },
-    getCellClassName(item) {
-      let className;
-      if (item === 'o') className = 'dot';
-      if (item === 'ld') className = 'line line--dark';
-      if (item === 'll') className = 'line line--light';
-      if (item === 'fl') className = 'from from--light';
-      if (item === 'fd') className = 'from from--dark';
-      if (item === 'tl') className = 'to to--light';
-      if (item === 'td') className = 'to to--dark';
-      if (item === 'fpd') className = 'from from--prev from--dark';
-      if (item === 'fpl') className = 'from from--pref from--light';
-      if (item === 'tnl') className = 'to to--next to--light';
-      if (item === 'tnd') className = 'to to--next to--dark';
-      return className;
-    },
+    ctx.style.width = 500;
+    ctx.style.height = 500;
 
-    getIcons(icons) {
-      const items = icons.split(' ').reduce((acc, code) => {
-        const icon = ICONS.find(i => i.code === code);
-        if (!icon) return;
-        acc.push({ image: icon.image, name: icon.name });
-        return acc;
-      }, []);
-      return items;
+    const width = ctx.scrollWidth;
+    const count = data.headers.length;
+    const x = d3.scaleLinear().domain([0, count]).range([20, width - 20]);
+
+    const headers = svg.selectAll('circle')
+      .data(data.headers).enter()
+      .append('circle')
+      .attr('cx', (item, index) => {
+        return x(index);
+      })
+      .attr('cy', 20)
+      .attr('r', 10)
+      .attr('fill', 'green');
+
+    function makeDot(x, y) {
+      const element = document.createElementNS('http://www.w3.org/2000/svg', 'circle');
+      element.setAttributeNS(null, 'cx', x);
+      element.setAttributeNS(null, 'cy', y);
+      element.setAttributeNS(null, 'r', 10);
+      element.setAttributeNS(null, 'stroke', 'green');
+      element.setAttributeNS(null, 'stroke-width', 2);
+      element.setAttributeNS(null, 'fill', 'none');
+      return element;
     }
+
+    function makeLine(x1, x2, top) {
+      const element = document.createElementNS('http://www.w3.org/2000/svg', 'line');
+      element.setAttributeNS(null, 'x1', x1);
+      element.setAttributeNS(null, 'x2', x2);
+      element.setAttributeNS(null, 'y1', top);
+      element.setAttributeNS(null, 'y2', top);
+      element.setAttributeNS(null, 'stroke', 'green');
+      element.setAttributeNS(null, 'stroke-width', 2);
+      return element;
+    }
+
+    const rows = svg
+      .selectAll('g')
+      .data(data.items)
+      .enter()
+      .append('g');
+
+    const headersMax = Math.max.apply(null, headers.data());
+    const headersMin = Math.min.apply(null, headers.data());
+    let rowCounter = 0;
+    const elements = rows.selectAll('.empty').data(d => d).enter().append(function(value, index) {
+      if (index === 0) rowCounter++;
+      const top = (rowCounter + 1) * 30;
+      let element;
+      if (Array.isArray(value)) {
+        const less = value[0] < headersMin;
+        const more = value[1] > headersMax;
+        const val1 = less ? headersMin : value[0];
+        const val2 = more ? headersMax : value[1];
+        const from = x(headers.data().indexOf(val1)) - (less ? 40 : 0);
+        const to = x(headers.data().indexOf(val2)) + (more ? 40 : 0);
+        element = makeLine(from, to, top);
+      } else {
+        const left = x(headers.data().indexOf(value));
+        element = makeDot(left, top);
+      }
+      return element;
+    });
+
+    function getElementsByValue(value) {
+      return elements.filter(item => {
+        let bool;
+        if (Array.isArray(item)) {
+          bool = value >= item [0] && value <= item[1];
+        } else {
+          bool = item === value;
+        }
+        return bool;
+      })
+    }
+
+    headers.on('mouseover', function(value) {
+      this.classList.add('active');
+      getElementsByValue(value).classed('active', true);
+    }).on('mouseout', function(value) {
+      this.classList.remove('active');
+      elements.classed('active', false);
+    });
+
   },
 };
 </script>
@@ -109,84 +128,8 @@ export default {
 <style lang="scss">
   @import "./assets/stylesheets/base/index";
 
-  $cell-width: 90px;
-
-  .sup {
-    position: absolute;
-    vertical-align: super;
-    font-size: 0.7em;
-    margin-left: 0.5em;
-    margin-top: -0.15em;
-  }
-
-  .grid {
-    display: table;
-    font-family: $font-regular;
-    color: $color-text;
-  }
-  .grid__head {
-    display: table-row;
-  }
-  .grid__head-cell {
-    display: table-cell;
-    width: $cell-width;
-    text-align: center;
-    vertical-align: top;
-    padding: 0 9px;
-  }
-
-  .grid__head-box {
-    border: 1px solid $color-border;
-    border-radius: 25px;
-    height: 50px;
-    padding: 0 5px;
-    display: flex;
-    align-items: center;
-    text-align: center;
-    justify-content: center;
-    line-height: 1em;
-  }
-
-  .grid__row-spacer {
-    height: 25px;
-    padding: 0;
-  }
-
-  .grid__body {
-    display: table-row-group;
-  }
-
-  .grid__row {
-    display: table-row;
-  }
-
-  .grid__body-cell {
-    display: table-cell;
-    vertical-align: middle;
-    width: $cell-width;
-    padding: 8px 0;
-  }
-
-  .grid__body-icons {
-    white-space: nowrap;
-    padding-right: 15px;
-    text-align: right;
-    & * {
-      margin-right: 7px;
-      &:last-child {
-        margin-right: 0;
-      }
-    }
-  }
-
-  .grid__body-name {
-    padding-right: 10px;
-  }
-
-  .grid__body-value {
-    background-image: url('./assets/images/dot.jpg');
-    background-position: 50% 0;
-    background-repeat: repeat-y;
-    text-align: center;
+  .active {
+    fill: $color-arrow-light;
+    stroke: $color-arrow-light;
   }
 </style>
