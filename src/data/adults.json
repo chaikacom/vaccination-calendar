@@ -8,6 +8,18 @@
     {
       "name": "Two",
       "items": ["1/12", "5/12", 3, { "label": "Only for choosen", "items": [5, 8] }, 9, 10]
+    },
+    {
+      "name": "Three",
+      "items": [1,5,7]
+    },
+    {
+      "name": "Four",
+      "items": [5,8,10]
+    },
+    {
+      "name": "Five",
+      "items": [2, 5, [7, 9]]
     }
   ]
 }

@@ -10,6 +10,8 @@
   "dependencies": {
     "core-js": "^2.6.5",
     "d3": "^5.9.7",
+    "normalize.css": "^8.0.1",
+    "simplebar": "^4.1.0",
     "vue": "^2.6.10"
   },
   "devDependencies": {

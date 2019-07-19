@@ -1,0 +1,48 @@
+.dot {
+    display: inline-block;
+    width: 1em;
+    height: 1em;
+    font-size: 25px;
+    color: $color-text;
+    border-radius: 50%;
+    background: currentColor;
+}
+
+.from,
+.to,
+.line {
+    position: relative;
+    height: 5px;
+    background: currentColor;
+
+    &--light {
+        color: $color-arrow-light;
+    }
+
+    &--dark {
+        color: $color-arrow-dark
+    }
+}
+
+.from {
+    margin-left: 50%;
+    &--prev {
+        margin-left: 0;
+    }
+}
+
+.to {
+    font-size: 10px;
+    margin-right: calc(50% + 1em);
+
+    &:before {
+        content: '';
+        display: block;
+        position: absolute;
+        top: 50%;
+        transform: translateY(-50%);
+        left: 100%;
+        border: 1em solid;
+        border-color: transparent transparent transparent currentColor;
+    }
+}

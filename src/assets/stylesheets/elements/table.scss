@@ -1,0 +1,18 @@
+.table {
+    display: table;
+}
+
+.table__row {
+    display: table-row;
+}
+
+.table__cell {
+    text-align: center;
+    min-width: 108px;
+    width: 108px;
+    padding: 10px 0;
+    background-image: url(../../assets/images/dot.jpg);
+    background-repeat: repeat-y;
+    background-position: 50% 0;
+    vertical-align: middle;
+}

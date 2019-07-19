@@ -1,5 +1,5 @@
 <template>
-  <table class="grid" ref="grid"></table>
+  <table class="grid" ref="grid" cellspacing="0"></table>
 </template>
 
 <script>
@@ -9,16 +9,24 @@ import Parser from '../models/Parser';
 import Timeline from '../models/Timeline';
 
 export default {
+  data() {
+    return {
+      timeline: null
+    }
+  },
+
   mounted() {
     const parsed = Parser.parseData(adults);
     const dates = parsed.reduce((acc, row) => acc.concat(row.getAllDates()), []);
     const timeline = new Timeline({ dates });
 
+    this.timeline = timeline;
+
     const table = d3.select('.grid')
 
-    table.append('tr').selectAll('td').data(timeline.dates).enter().append('td').text((d) => {
-      return Parser.dateToText(d.term);
-    })
+//    table.append('tr').selectAll('td').data(timeline.dates).enter().append('td').text((d) => {
+//      return Parser.dateToText(d.term);
+//    })
 
     parsed.forEach(row => {
       const tr = table.append('tr')
@@ -60,7 +68,7 @@ export default {
         tr.append('td').text(text);
       })
     })
-  }
+  },
 };
 </script>
 
@@ -68,5 +76,6 @@ export default {
   .grid td {
     border-bottom: 1px solid #ccc;
     padding: 15px 10px;
+    min-width: 80px;
   }
 </style>
