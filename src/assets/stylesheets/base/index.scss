@@ -1,2 +1,7 @@
 @import "colors";
 @import "typo";
+
+.active {
+    fill: $color-arrow-light;
+    stroke: $color-arrow-light;
+}
