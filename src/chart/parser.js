@@ -33,7 +33,8 @@ export function parseTermValue(value) {
 }
 
 export function termToValue(term) {
-  return parseTermValue(term.years) + parseTermValue(term.months) / 12 + parseTermValue(term.days) / 365;
+  const value = parseTermValue(term.years) + parseTermValue(term.months) / 12 + parseTermValue(term.days) / 365;
+  return Math.round(value * 100) / 100;
 }
 
 export function parseTerm(number) {
@@ -41,14 +42,21 @@ export function parseTerm(number) {
 }
 
 export function getAllValues(terms) {
-  return terms.reduce((acc, term) => {
-    if (term.hasDuration()) {
-      acc = acc.concat(getAllValues(term.duration));
-    } else {
-      acc.push(term);
-    }
-    return acc;
-  }, []);
+  return terms
+    .reduce((acc, term) => {
+      if (term.hasDuration()) {
+        acc = acc.concat(getAllValues(term.duration));
+      } else {
+        acc.push(term);
+      }
+      return acc;
+    }, [])
+    .reduce((acc, term) => {
+      const isExists = acc.find(t => t.value === term.value);
+      if (!isExists) acc.push(term);
+      return acc;
+    }, [])
+    .sort((a, b) => (a.value < b.value ? -1 : 0));
 }
 
 export function parseObject(object) {
@@ -63,7 +71,7 @@ export function parseObject(object) {
   }
   return new Term({
     duration: isArray ? object.items.map(parseItem) : null,
-    value: isArray ? null : parseValue(object.items),
+    value: isArray ? null : termToValue(term),
     label,
     original: object.items,
   });
