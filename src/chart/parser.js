@@ -41,11 +41,11 @@ export function parseTerm(number) {
   return { years: number[0] || 0, months: number[1] || 0, days: number[2] || 0 };
 }
 
-export function getAllValues(terms) {
+export function getAllValues(terms, range) {
   return terms
     .reduce((acc, term) => {
       if (term.hasDuration()) {
-        acc = acc.concat(getAllValues(term.duration));
+        acc = acc.concat(getAllValues(term.duration, range));
       } else {
         acc.push(term);
       }
@@ -56,7 +56,8 @@ export function getAllValues(terms) {
       if (!isExists) acc.push(term);
       return acc;
     }, [])
-    .sort((a, b) => (a.value < b.value ? -1 : 0));
+    .sort((a, b) => (a.value < b.value ? -1 : 0))
+    .filter(term => range.contains(term.value));
 }
 
 export function parseObject(object) {

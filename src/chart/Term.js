@@ -22,9 +22,15 @@ export default class Term {
     return Array.isArray(this.duration);
   }
 
+  isExt(value) {
+    if (this.from.value === value) return 'start';
+    if (this.to.value === value) return 'end';
+    return false;
+  }
+
   contains(value) {
     if (this.hasDuration()) {
-      return this.from.value >= value && this.to.value <= value;
+      return value >= this.from.value && value <= this.to.value;
     } else {
       return this.value === value;
     }

@@ -2,23 +2,38 @@
   <div id="app">
     <div class="grid">
       <div class="grid__aside">
-        <div class="names">
-          <div class="name"></div>
+        <div class="tbl">
+          <div class="tbl__row" v-for="item in items">
+            <div class="tbl__cell tbl__cell-icons">
+              <template v-if="item.icons">
+                <img :src="require(`./assets/images/${getIcon(icon).image}.svg`)"
+                     :title="getIcon(icon).name"
+                     class="tbl__cell-icon"
+                     v-for="icon in item.icons.split(' ')">
+              </template>
+            </div>
+            <div class="tbl__cell tbl__cell-name">
+              {{ item.name }}
+            </div>
+          </div>
         </div>
       </div>
       <div class="grid__main">
         <div class="grid__main-top">
-          <div class="terms" ref="headers">
-            <div class="terms__item" v-for="item in headers">
-              {{ item.label }}
+          <div class="tbl" ref="headers">
+            <div class="tbl__cell tbl__cell-header" v-for="item in headers">
+              <div class="tbl__header-box">
+                {{ item.label }}
+              </div>
             </div>
           </div>
         </div>
-        <div class="grid__main-center"></div>
+        <div class="grid__main-center">
+          <tbl :headers="headers" :rows="items" :range="range"></tbl>
+        </div>
         <div class="grid__main-bottom"></div>
       </div>
     </div>
-      <svg id="svg"></svg>
   </div>
 </template>
 
@@ -27,6 +42,10 @@ import 'normalize.css';
 import './assets/stylesheets/index.scss';
 import chart from './chart';
 import * as parser from './chart/parser';
+import Tbl from './components/Tbl.vue';
+
+const SYM_DOT      = 1;
+const SYM_LINE     = 2;
 
 const ICONS = [
   { code: 'WORK_INFECT', image: 'work', name: 'Работающие в условиях, связанных с риском заражения' },
@@ -39,53 +58,64 @@ const ICONS = [
 
 
 const demoData1 = {
-  // headers: ['0/0/1', '0/0/3-7', '0/1', { items: '0/2', title: 'lorem' }, '0/3', '0/4.5', '0/6', '0/9', '0/12', ['0/2', '0/10']],
+  range: ['0/0/2', '0/8'],
   items: [
-    ['0/0/1', '0/0/3-7', '0/1', '0/4.5', { items: '0/9' }],
-    [['0/0/0', '0/2'], ['0/9', '2']],
+    {
+      icons: 'WORK_INFECT CHRON CONTACTS',
+      name: 'Lorem',
+      items: ['0/1', '0/3', '0/0/3-7', '0/1', '0/4.5', { items: '0/5' }],
+    },
+    {
+      name: 'Ipsum asd asd fwe qwqdqw dqw q ',
+      items: [['0/0/1', '0/2'], ['0/4', '0/9']],
+    }
   ],
 };
-
-const demoData2 = {
-  items: [
-    ['0/0/5', '1'],
-//    ['0/2', '0/5']
-  ]
-}
 
 function prepareData(data) {
   let headers = [];
   const rows = data.items.map((row) => {
-    return row.map(parser.parseItem);
+    return {
+      icons: row.icons,
+      name: row.name,
+      items: row.items.map(parser.parseItem)
+    }
   });
+
+  const range = parser.parseArray(data.range);
+
   rows.forEach((row) => {
-    row.forEach(term => headers.push(term));
+    row.items.forEach(term => headers.push(term));
   })
-  headers = parser.getAllValues(headers);
-  return { headers, items: rows };
+  headers = parser.getAllValues(headers, range);
+  return { range: range, headers, items: rows };
 }
 
 const data1 = prepareData(demoData1);
-const data2 = prepareData(demoData2);
 
 export default {
   name: 'app',
-  components: {},
+  components: { Tbl },
   data() {
     return {
+      range: data1.range,
       headers: data1.headers,
+      items: data1.items
     }
   },
   mounted() {
-    const diagram =  chart.init('#svg', data1);
-//    setTimeout(() => {
-//      diagram.drawRows(data2);
-//    }, 3000)
+  },
+
+  methods: {
+    getIcon(code) {
+      return ICONS.find(icon => icon.code === code);
+    }
   },
 };
 </script>
 
 <style lang="scss">
+
   .terms {
     display: flex;
     justify-content: space-between;
@@ -94,4 +124,17 @@ export default {
   }
   .terms__item {
   }
+
+  .grid {
+    display: flex;
+  }
+
+  .grid__aside {
+    padding-top: 52px;
+  }
+
+  .grid__main {
+
+  }
+
 </style>

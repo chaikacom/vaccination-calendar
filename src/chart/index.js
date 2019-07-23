@@ -11,16 +11,24 @@ const defaults = {
   lineHeight: 30,
 }
 
+function calcColWidth(columnsCount) {
+  console.log(columnsCount);
+  const minWidth = 108;
+  const maxWidth = 180;
+}
+
 function init(node, data, options = {}) {
   const opts = Object.assign({}, defaults, options);
   const svg = d3.select(node);
   const ctx = svg.node();
+  const colsCount = data.headers.length - 1;
+  const rowsCount = data.items.length - 1;
+
+  calcColWidth(colsCount);
 
   ctx.style.width = opts.width;
   ctx.style.height = opts.height;
 
-  const colsCount = data.headers.length - 1;
-  const rowsCount = data.items.length - 1;
   const x = d3.scaleLinear().domain([0, colsCount]).range([opts.hSpace, opts.width - opts.hSpace]);
   const y = d3.scaleLinear().domain([0, rowsCount]).range([opts.vSpace, opts.height - opts.vSpace]);
 
@@ -57,14 +65,7 @@ function init(node, data, options = {}) {
   function drawRows(data) {
     let rowCounter = 0;
 
-    // data.items.forEach((dataRow) => {
-    //   const items = svg.selectAll('.row').data(dataRow);
-    //   items.enter().append('g').classed('row', true);
-    // });
-
     const rows = svg.selectAll('g.row').data(data.items)
-    // rows.exit().remove();
-    // rows
       .enter().append('g').classed('row', true);
 
     const els = rows.selectAll('circle')
@@ -75,42 +76,6 @@ function init(node, data, options = {}) {
       .append(({ term, index }) => {
         return drawRowElements(term, data.headers, index)
       });
-
-    // console.log(els);
-
-    //   .append((d) => {
-    //   console.log(this, arguments);
-    //   return makeDot(0, 0);
-    // });
-
-    // const items = rows.enter().selectAll('.term').data(d => d)
-    // items.exit().remove();
-    // items.enter().append((term, index) => {
-    //   index === 0 && rowCounter++;
-    //   return drawRowElements(term, data.headers, rowCounter);
-    // }).classed('term', true);
-
-    // rows.each((row) => {
-    //   const newrows = rows.selectAll('.term').data(row);
-    //   console.log(row);
-    //   newrows.exit().remove();
-    //   newrows
-    //     .enter().append((term, index) => {
-    //       index === 0 && rowCounter++;
-    //       return drawRowElements(term, data.headers, rowCounter);
-    //     }).classed('term', true);
-    // });
-
-    // const newrows = rows.selectAll('.term').data(data.items);
-
-    // console.log(newrows);
-
-    // newrows.exit().remove();
-    // newrows
-    //   .enter().append((term, index) => {
-    //   index === 0 && rowCounter++;
-    //   return drawRowElements(term, data.headers, rowCounter);
-    // }).classed('term', true);
   }
 
   drawRows(data);
