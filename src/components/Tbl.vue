@@ -85,6 +85,7 @@
     font-size: 16px;
     padding: 10px 40px 10px 0;
     width: 170px;
+    min-width: 170px;
     vertical-align: middle;
   }
   .tbl__cell-header {
@@ -118,6 +119,7 @@
   .tbl__cell-icons {
     padding-right: 10px;
     vertical-align: middle;
+    white-space: nowrap;
   }
   .tbl__cell-icon {
     margin-right: 5px;

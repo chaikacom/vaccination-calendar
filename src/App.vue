@@ -1,5 +1,7 @@
 <template>
   <div id="app">
+    <button @click="changeData('child')">Child</button>
+    <button @click="changeData('adult')">Adult</button>
     <div class="grid">
       <div class="grid__aside">
         <div class="tbl" ref="tableHeight">
@@ -63,7 +65,7 @@ const ICONS = [
 ];
 
 
-const demoData1 = {
+let child = {
   range: ['0/2', '0/8'],
   items: [
     {
@@ -77,6 +79,22 @@ const demoData1 = {
     }
   ],
 };
+
+let adult = {
+  range: ['18', '55'],
+  items: [
+    {
+      icons: 'WORK_INFECT LIVE_TERR',
+      name: 'Gwgtj',
+      items: ['18', '20', '45']
+    },
+    {
+      icons: 'VISIT_TERR',
+      name: 'Ousfwef',
+      items: ['21', '35']
+    }
+  ]
+}
 
 function prepareData(data) {
   let headers = [];
@@ -97,32 +115,57 @@ function prepareData(data) {
   return { range: range, headers, items: rows };
 }
 
-const data1 = prepareData(demoData1);
+child = prepareData(child);
+adult = prepareData(adult);
+
+const dataset = { child, adult };
 
 export default {
   name: 'app',
   components: { Tbl },
   data() {
     return {
+      dataset,
+      age: 'adult',
       active: null,
-      range: data1.range,
-      headers: data1.headers,
-      items: data1.items
     }
   },
+
+  computed: {
+    data() {
+      return this.dataset[this.age];
+    },
+    range() {
+      return this.data.range;
+    },
+    headers() {
+      return this.data.headers;
+    },
+    items() {
+      return this.data.items;
+    },
+  },
+
   mounted() {
     window.addEventListener('load', e => {
+      this.calcHeights();
+    });
+    this.calcHeights();
+  },
+
+  methods: {
+    calcHeights() {
       const table = this.$refs.table;
       const ref = this.$refs.tableHeight;
       const heights = [].map.call(ref.querySelectorAll('.tbl__cell-name'), this.calcHeight);
       table.$el.querySelectorAll('.tbl__row').forEach((row, index) => {
         const height = heights[index];
         row.querySelectorAll('.tbl__cell').forEach(cell => cell.style.height = height + 'px');
-      })
-    })
-  },
-
-  methods: {
+      });
+    },
+    changeData(key) {
+      this.age = key;
+    },
     select(item) {
       this.active = this.active && this.active.value === item.value ? null : item;
     },
@@ -170,7 +213,7 @@ export default {
   }
 
   .grid__main {
-
+    overflow: auto;
   }
 
 </style>
