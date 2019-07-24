@@ -1,8 +1,7 @@
 <template>
   <div id="app" class="app">
-    <button @click="changeData(age.id)" v-for="age in dataset">{{ age.id }}</button>
 
-    <div class="persons persons--compact" ref="persons">
+    <div class="persons" ref="persons">
       <div class="persons__item"
            @click="age = person.id"
            :class="{ 'persons__item--active': person.id === age }"
@@ -274,7 +273,7 @@ export default {
 
   .persons {
     display: flex;
-    justify-content: space-between;
+    justify-content: space-around;
   }
   .persons__item {
     cursor: pointer;
