@@ -45,10 +45,13 @@
     </div>
 
     <div class="icons-description icons-set">
-      <img :src="require(`./assets/images/${icon.image}.svg`)"
-           :title="icon.name"
-           class="icons-description__item"
-           v-for="icon in icons">
+      <template v-for="icon in icons">
+        <img :src="require(`./assets/images/${icon.image}.svg`)"
+             :title="icon.name"
+             v-popover.left="{ name: icon.code }"
+             class="icons-description__item icons-set">
+        <popover :name="icon.code">{{ icon.name }}</popover>
+      </template>
     </div>
 
     <ul class="legend">
@@ -59,6 +62,8 @@
         <div class="legend__item-text" v-html="line.text"></div>
       </li>
     </ul>
+
+    <tooltip></tooltip>
 
   </div>
 </template>
@@ -104,7 +109,7 @@ export default {
   data() {
     return {
       dataset: dataset,
-      age: 'adult',
+      age: 'baby',
       active: null,
       icons,
       legend,
@@ -215,19 +220,22 @@ export default {
 
   .icons-set {
     display: inline-flex;
-    font-size: 35px;
 
-    & > * {
+    & > img {
       margin-right: 0.4em;
       width: 1em;
       height: 1em;
+      font-size: 35px;
+
       &:last-child {
         margin-right: 0;
       }
     }
 
     &--sm {
-      font-size: 25px;
+      & > img {
+        font-size: 25px;
+      }
     }
   }
 </style>

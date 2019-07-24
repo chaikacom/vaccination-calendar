@@ -4,7 +4,7 @@
     {
       "icons": "WORK_INFECT LIVE_TERR",
       "name": "Gwgtj",
-      "items": ["18", "20", "45"]
+      "items": ["18", "20", { "items": "45", "title": "Fourty five" }]
     },
     {
       "icons": "VISIT_TERR",

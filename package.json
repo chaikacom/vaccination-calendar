@@ -12,7 +12,8 @@
     "d3": "^5.9.7",
     "normalize.css": "^8.0.1",
     "simplebar": "^4.1.0",
-    "vue": "^2.6.10"
+    "vue": "^2.6.10",
+    "vue-js-popover": "^1.1.8"
   },
   "devDependencies": {
     "@vue/cli-plugin-babel": "^3.9.0",

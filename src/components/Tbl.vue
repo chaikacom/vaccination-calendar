@@ -2,10 +2,13 @@
   <div class="tbl">
     <div class="tbl__row" v-for="termRow in terms">
       <div class="tbl__cell tbl__cell-value" v-for="term in termRow">
-        <div class="symbol"
-             v-if="term"
-             :title="term.title"
-             :class="term.className"></div>
+        <template v-if="term">
+          <div class="symbol"
+               v-popover="{ event: 'hover', name: term.popover }"
+               :title="term.title"
+               :class="term.className"></div>
+          <popover event="hover" v-if="term.popover" :name="term.popover">{{ term.title }}</popover>
+        </template>
       </div>
     </div>
   </div>
@@ -26,10 +29,11 @@
     computed: {
       terms() {
         return this.rows.map((row, rowIndex) => {
-          return this.headers.map((header) => {
+          return this.headers.map((header, headerIndex) => {
             const term = row.items.find(term => term.contains(header.value));
             if (!term) return null;
             return {
+              popover: term.title ? `popover_${rowIndex}${headerIndex}` : null,
               title: term.title,
               className: this.symbolClass(term, header)
             }
