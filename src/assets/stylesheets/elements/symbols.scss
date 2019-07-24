@@ -7,6 +7,10 @@
     border-radius: 50%;
     background: currentColor;
 
+    &--light {
+        color: $color-arrow-light;
+    }
+
     &.inactive {
         color: $color-border;
     }

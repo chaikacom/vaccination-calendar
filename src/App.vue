@@ -1,5 +1,5 @@
 <template>
-  <div id="app">
+  <div id="app" class="app">
     <button @click="changeData(key)" v-for="(age, key) in dataset">{{ key }}</button>
     <div class="grid">
       <div class="grid__aside">
@@ -7,10 +7,12 @@
           <div class="tbl__row" v-for="item in items">
             <div class="tbl__cell tbl__cell-icons">
               <template v-if="item.icons">
-                <img :src="require(`./assets/images/${getIcon(icon).image}.svg`)"
-                     :title="getIcon(icon).name"
-                     class="tbl__cell-icon"
-                     v-for="icon in item.icons.split(' ')">
+                <div class="icons-set icons-set--sm">
+                  <img :src="require(`./assets/images/${getIcon(icon).image}.svg`)"
+                       :title="getIcon(icon).name"
+                       class="tbl__cell-icon"
+                       v-for="icon in item.icons.split(' ')">
+                </div>
               </template>
             </div>
             <div class="tbl__cell tbl__cell-name">
@@ -41,6 +43,23 @@
         <div class="grid__main-bottom"></div>
       </div>
     </div>
+
+    <div class="icons-description icons-set">
+      <img :src="require(`./assets/images/${icon.image}.svg`)"
+           :title="icon.name"
+           class="icons-description__item"
+           v-for="icon in icons">
+    </div>
+
+    <ul class="legend">
+      <li class="legend__item" v-for="line in legend">
+        <div class="legend__item-symbol">
+          <div class="symbol" :class="line.symbol"></div>
+        </div>
+        <div class="legend__item-text" v-html="line.text"></div>
+      </li>
+    </ul>
+
   </div>
 </template>
 
@@ -51,15 +70,8 @@ import chart from './chart';
 import * as parser from './chart/parser';
 import Tbl from './components/Tbl.vue';
 import dataJSON from './data/dataset';
-
-const ICONS = [
-  { code: 'WORK_INFECT', image: 'work', name: 'Работающие в условиях, связанных с риском заражения' },
-  { code: 'LIVE_TERR', image: 'location', name: 'Проживающие на территориях с высоким уровнем заболеваемости (риска заболеваемости) данными инфекциями' },
-  { code: 'VISIT_TERR', image: 'travel', name: 'Выезжающие на территории с высоким уровнем заболеваемости (риска заболеваемости) данными инфекциями' },
-  { code: 'WAR', image: 'army', name: 'Лица, подлежащие призыву на военную службу' },
-  { code: 'CONTACTS', image: 'infection', name: 'Контактные лица в очагах инфекции или при угрозе возникновения вспышки' },
-  { code: 'CHRON', image: 'health', name: 'При наличии хронических заболеваний или других состояний здоровья' },
-];
+import icons from './icons';
+import legend from './legend.json';
 
 const dataset = Object.entries(dataJSON).reduce((acc, [key, value]) => {
   acc[key] = prepareData(value);
@@ -73,7 +85,7 @@ function prepareData(data) {
     return {
       icons: row.icons,
       name: row.name,
-      items: row.items.map(parser.parseItem)
+      items: row.items.map(parser.parseItem),
     }
   });
 
@@ -94,6 +106,8 @@ export default {
       dataset: dataset,
       age: 'adult',
       active: null,
+      icons,
+      legend,
     }
   },
 
@@ -120,10 +134,12 @@ export default {
   },
 
   mounted() {
-    window.addEventListener('load', e => {
-      this.calcHeights();
-    });
+    window.addEventListener('load', this.calcHeights);
     this.calcHeights();
+  },
+
+  beforeDestroy() {
+    window.removeEventListener('load', this.calcHeights);
   },
 
   methods: {
@@ -153,17 +169,23 @@ export default {
       return Number(top) + Number(height) + Number(bottom);
     },
     getIcon(code) {
-      return ICONS.find(icon => icon.code === code);
+      return this.icons.find(icon => icon.code === code);
     }
   },
 };
 </script>
 
 <style lang="scss">
+  @import "./assets/stylesheets/base/index";
+
   @font-face {
     font-family: 'Gotham Pro';
     src: url(./assets/fonts/gotham_pro/gotham_pro.woff);
     font-weight: normal;
+  }
+
+  .app {
+    color: $color-text;
   }
 
   .body {
@@ -191,4 +213,21 @@ export default {
     overflow: auto;
   }
 
+  .icons-set {
+    display: inline-flex;
+    font-size: 35px;
+
+    & > * {
+      margin-right: 0.4em;
+      width: 1em;
+      height: 1em;
+      &:last-child {
+        margin-right: 0;
+      }
+    }
+
+    &--sm {
+      font-size: 25px;
+    }
+  }
 </style>

@@ -119,12 +119,32 @@
   .tbl__cell-icons {
     padding-right: 10px;
     vertical-align: middle;
-    white-space: nowrap;
+    text-align: right;
   }
-  .tbl__cell-icon {
-    margin-right: 5px;
-    &:last-child {
-      margin-right: 0;
+
+  .legend {
+    display: block;
+    margin: 0;
+    list-style: none;
+    padding: 0;
+    max-width: 860px;
+
+    li {
+      display: flex;
+      align-items: center;
+      margin-bottom: 1em;
+      &:last-child {
+        margin-bottom: 0;
+      }
+    }
+  }
+
+  .legend__item-symbol {
+    flex: 0 0 30px;
+    margin-right: 15px;
+    text-align: center;
+    .dot {
+      font-size: 20px;
     }
   }
 </style>
