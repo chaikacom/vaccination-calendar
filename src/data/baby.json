@@ -1,0 +1,14 @@
+{
+  "range": ["0/2", "0/8"],
+  "items": [
+    {
+      "icons": "WORK_INFECT CHRON CONTACTS",
+      "name": "Lorem",
+      "items": ["0/2", "0/3", "0/4.5", "0/7", { "items": "0/5", "title": "sdasd " }]
+    },
+    {
+      "name": "Ipsum asd asd fwe qwqdqw dqw q ",
+      "items": [["0/1", "0/4"], { "items": ["0/5", "0/9"], "title": "Yahoo!" }]
+    }
+  ]
+}

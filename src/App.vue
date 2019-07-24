@@ -1,7 +1,6 @@
 <template>
   <div id="app">
-    <button @click="changeData('child')">Child</button>
-    <button @click="changeData('adult')">Adult</button>
+    <button @click="changeData(key)" v-for="(age, key) in dataset">{{ key }}</button>
     <div class="grid">
       <div class="grid__aside">
         <div class="tbl" ref="tableHeight">
@@ -51,9 +50,7 @@ import './assets/stylesheets/index.scss';
 import chart from './chart';
 import * as parser from './chart/parser';
 import Tbl from './components/Tbl.vue';
-
-const SYM_DOT      = 1;
-const SYM_LINE     = 2;
+import dataJSON from './data/dataset';
 
 const ICONS = [
   { code: 'WORK_INFECT', image: 'work', name: 'Работающие в условиях, связанных с риском заражения' },
@@ -64,37 +61,11 @@ const ICONS = [
   { code: 'CHRON', image: 'health', name: 'При наличии хронических заболеваний или других состояний здоровья' },
 ];
 
+const dataset = Object.entries(dataJSON).reduce((acc, [key, value]) => {
+  acc[key] = prepareData(value);
+  return acc;
+}, {});
 
-let child = {
-  range: ['0/2', '0/8'],
-  items: [
-    {
-      icons: 'WORK_INFECT CHRON CONTACTS',
-      name: 'Lorem',
-      items: ['0/2', '0/3', '0/4.5', '0/7', { items: '0/5', title: 'sdasd ' }],
-    },
-    {
-      name: 'Ipsum asd asd fwe qwqdqw dqw q ',
-      items: [['0/1', '0/4'], { items: ['0/5', '0/9'], title: 'Yahoo!' }],
-    }
-  ],
-};
-
-let adult = {
-  range: ['18', '55'],
-  items: [
-    {
-      icons: 'WORK_INFECT LIVE_TERR',
-      name: 'Gwgtj',
-      items: ['18', '20', '45']
-    },
-    {
-      icons: 'VISIT_TERR',
-      name: 'Ousfwef',
-      items: ['21', '35']
-    }
-  ]
-}
 
 function prepareData(data) {
   let headers = [];
@@ -115,17 +86,12 @@ function prepareData(data) {
   return { range: range, headers, items: rows };
 }
 
-child = prepareData(child);
-adult = prepareData(adult);
-
-const dataset = { child, adult };
-
 export default {
   name: 'app',
   components: { Tbl },
   data() {
     return {
-      dataset,
+      dataset: dataset,
       age: 'adult',
       active: null,
     }
@@ -145,7 +111,7 @@ export default {
       return this.data.items;
     },
   },
-
+  
   mounted() {
     window.addEventListener('load', e => {
       this.calcHeights();

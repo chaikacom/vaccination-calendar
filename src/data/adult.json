@@ -1,0 +1,15 @@
+{
+  "range": ["18", "55"],
+  "items": [
+    {
+      "icons": "WORK_INFECT LIVE_TERR",
+      "name": "Gwgtj",
+      "items": ["18", "20", "45"]
+    },
+    {
+      "icons": "VISIT_TERR",
+      "name": "Ousfwef",
+      "items": ["21", "35"]
+    }
+  ]
+}
