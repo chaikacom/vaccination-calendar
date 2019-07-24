@@ -1,6 +1,18 @@
 <template>
   <div id="app" class="app">
     <button @click="changeData(key)" v-for="(age, key) in dataset">{{ key }}</button>
+
+    <div class="persons">
+      <div class="persons__item" v-for="person in persons">
+        <div class="persons__item-icon">
+          <svg class="person">
+            <use :xlink:href="require(`./assets/images/persons.svg`) + `#${person.icon}`"></use>
+          </svg>
+        </div>
+        <div class="persons__item-label">{{ person.label }}</div>
+      </div>
+    </div>
+
     <div class="grid">
       <div class="grid__aside">
         <div class="tbl" ref="tableHeight">
@@ -113,6 +125,13 @@ export default {
       active: null,
       icons,
       legend,
+      persons: [
+        { icon: 'baby', label: 'Дети до года' },
+        { icon: 'toddler', label: 'С года до трех' },
+        { icon: 'pupil', label: 'Дошкольники и школьники' },
+        { icon: 'adult', label: 'Взрослые' },
+        { icon: 'old', label: 'Старше 55 лет' },
+      ]
     }
   },
 
@@ -237,5 +256,38 @@ export default {
         font-size: 25px;
       }
     }
+  }
+
+  .person {
+    width: 1em;
+    height: 1em;
+  }
+
+  .persons {
+    display: flex;
+    justify-content: space-between;
+  }
+  .persons__item {
+    cursor: pointer;
+    color: $color-icons;
+    width: 145px;
+    text-align: center;
+    &:hover {
+      color: $color-red;
+    }
+  }
+  .persons__item-icon {
+    text-align: center;
+    margin-bottom: 20px;
+    * {
+      font-size: 100px;
+      vertical-align: top;
+    }
+  }
+  .persons__item-label {
+    text-transform: uppercase;
+    font-weight: bold;
+    font-size: 14px;
+    line-height: 16px;
   }
 </style>
