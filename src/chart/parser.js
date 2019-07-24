@@ -65,6 +65,7 @@ export function parseObject(object) {
   let numbers;
   let label;
   let term;
+  let title = object.title;
   if (!isArray) {
     numbers = parseNumber(object.items);
     term = parseTerm(numbers);
@@ -74,6 +75,7 @@ export function parseObject(object) {
     duration: isArray ? object.items.map(parseItem) : null,
     value: isArray ? null : termToValue(term),
     label,
+    title,
     original: object.items,
   });
 }

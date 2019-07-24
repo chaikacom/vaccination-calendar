@@ -4,7 +4,7 @@ export default class Term {
       duration: null,
       value: null,
       label: null,
-      text: null,
+      title: null,
       from: null,
       to: null,
     };

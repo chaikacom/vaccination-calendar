@@ -69,11 +69,11 @@ const demoData1 = {
     {
       icons: 'WORK_INFECT CHRON CONTACTS',
       name: 'Lorem',
-      items: ['0/2', '0/3', '0/4.5', '0/7', { items: '0/5' }],
+      items: ['0/2', '0/3', '0/4.5', '0/7', { items: '0/5', title: 'sdasd ' }],
     },
     {
       name: 'Ipsum asd asd fwe qwqdqw dqw q ',
-      items: [['0/1', '0/4'], ['0/5', '0/9']],
+      items: [['0/1', '0/4'], { items: ['0/5', '0/9'], title: 'Yahoo!' }],
     }
   ],
 };
@@ -115,7 +115,6 @@ export default {
       const table = this.$refs.table;
       const ref = this.$refs.tableHeight;
       const heights = [].map.call(ref.querySelectorAll('.tbl__cell-name'), this.calcHeight);
-      console.log(heights);
       table.$el.querySelectorAll('.tbl__row').forEach((row, index) => {
         const height = heights[index];
         row.querySelectorAll('.tbl__cell').forEach(cell => cell.style.height = height + 'px');

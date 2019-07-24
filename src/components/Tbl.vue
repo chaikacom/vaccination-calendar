@@ -1,8 +1,11 @@
 <template>
   <div class="tbl">
-    <div class="tbl__row" v-for="row in rows">
-      <div class="tbl__cell tbl__cell-value" v-for="header in headers">
-        <div class="symbol" :class="symbolClass(row, header)"></div>
+    <div class="tbl__row" v-for="termRow in terms">
+      <div class="tbl__cell tbl__cell-value" v-for="term in termRow">
+        <div class="symbol"
+             v-if="term"
+             :title="term.title"
+             :class="term.className"></div>
       </div>
     </div>
   </div>
@@ -14,15 +17,39 @@
       'headers', 'rows', 'range', 'active'
     ],
 
+    data() {
+      return {
+        term: null
+      }
+    },
+
+    computed: {
+      terms() {
+        return this.rows.map((row, rowIndex) => {
+          return this.headers.map((header) => {
+            const term = row.items.find(term => term.contains(header.value));
+            if (!term) return null;
+            return {
+              title: term.title,
+              className: this.symbolClass(term, header)
+            }
+          })
+        })
+      },
+    },
+
     methods: {
-      symbolClass(row, header) {
+      getTerm(row, header) {
+        this.term = row.items.find(item => item.contains(header.value));
+      },
+
+      symbolClass(term, header) {
         let classList = '';
-        const t =  row.items.find(term => term.contains(header.value));
 
-        if (!t) return classList;
+        if (!term) return classList;
 
-        if (t.hasDuration()) {
-          const ext = t.isExt(header.value);
+        if (term.hasDuration()) {
+          const ext = term.isExt(header.value);
           if (ext) {
             classList += ext === 'start' ? 'from from--light' : 'to to--light';
           } else {
@@ -32,7 +59,7 @@
           classList = 'dot';
         }
         if (this.active) {
-          classList += !t.contains(this.active.value) ? " inactive" : '';
+          classList += !term.contains(this.active.value) ? " inactive" : '';
         }
         return classList;
       },
