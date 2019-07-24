@@ -111,7 +111,14 @@ export default {
       return this.data.items;
     },
   },
-  
+
+  watch: {
+    data() {
+      this.active = null;
+      this.calcHeights();
+    }
+  },
+
   mounted() {
     window.addEventListener('load', e => {
       this.calcHeights();
@@ -121,13 +128,15 @@ export default {
 
   methods: {
     calcHeights() {
-      const table = this.$refs.table;
-      const ref = this.$refs.tableHeight;
-      const heights = [].map.call(ref.querySelectorAll('.tbl__cell-name'), this.calcHeight);
-      table.$el.querySelectorAll('.tbl__row').forEach((row, index) => {
-        const height = heights[index];
-        row.querySelectorAll('.tbl__cell').forEach(cell => cell.style.height = height + 'px');
-      });
+      this.$nextTick(() => {
+        const table = this.$refs.table;
+        const ref = this.$refs.tableHeight;
+        const heights = [].map.call(ref.querySelectorAll('.tbl__cell-name'), this.calcHeight);
+        table.$el.querySelectorAll('.tbl__row').forEach((row, index) => {
+          const height = heights[index];
+          row.querySelectorAll('.tbl__cell').forEach(cell => cell.style.height = height + 'px');
+        });
+      })
     },
     changeData(key) {
       this.age = key;
