@@ -1,15 +1,15 @@
 <template>
   <div id="app" class="app">
-    <button @click="changeData(key)" v-for="(age, key) in dataset">{{ key }}</button>
+    <button @click="changeData(age.id)" v-for="age in dataset">{{ age.id }}</button>
 
-    <div class="persons" ref="persons">
+    <div class="persons persons--compact" ref="persons">
       <div class="persons__item"
-           @click="currentPerson = person.icon"
-           :class="{ 'persons__item--active': person.icon === currentPerson }"
-           v-for="person in persons">
+           @click="age = person.id"
+           :class="{ 'persons__item--active': person.id === age }"
+           v-for="person in dataset">
         <div class="persons__item-icon">
           <svg class="person">
-            <use :xlink:href="require(`./assets/images/persons.svg`) + `#${person.icon}`"></use>
+            <use :xlink:href="require(`./assets/images/persons.svg`) + `#${person.id}`"></use>
           </svg>
         </div>
         <div class="persons__item-label">{{ person.label }}</div>
@@ -94,11 +94,7 @@ import icons from './icons';
 import legend from './legend.json';
 import Hammer from 'hammerjs';
 
-const dataset = Object.entries(dataJSON).reduce((acc, [key, value]) => {
-  acc[key] = prepareData(value);
-  return acc;
-}, {});
-
+const dataset = dataJSON.map(prepareData);
 
 function prepareData(data) {
   let headers = [];
@@ -116,7 +112,7 @@ function prepareData(data) {
     row.items.forEach(term => headers.push(term));
   })
   headers = parser.getAllValues(headers, range);
-  return { range: range, headers, items: rows };
+  return { id: data.id, label: data.label, range: range, headers, items: rows };
 }
 
 export default {
@@ -124,7 +120,6 @@ export default {
   components: { Tbl },
   data() {
     return {
-      currentPerson: 'toddler',
       hammer: null,
 
       dataset: dataset,
@@ -132,19 +127,12 @@ export default {
       active: null,
       icons,
       legend,
-      persons: [
-        { icon: 'baby', label: 'Дети до года' },
-        { icon: 'toddler', label: 'С года до трех' },
-        { icon: 'pupil', label: 'Дошкольники и школьники' },
-        { icon: 'adult', label: 'Взрослые' },
-        { icon: 'old', label: 'Старше 55 лет' },
-      ]
     }
   },
 
   computed: {
     data() {
-      return this.dataset[this.age];
+      return this.dataset.find(item => item.id === this.age);
     },
     range() {
       return this.data.range;
@@ -171,15 +159,15 @@ export default {
       directions: Hammer.DIRECTION_HORIZONTAL
     });
     this.hammer.on('swipe', (e) => {
-      const idx = this.persons.findIndex(person => person.icon === this.currentPerson);
+      const idx = this.dataset.findIndex(item => item.id === this.age);
       let to;
       if (e.direction === Hammer.DIRECTION_LEFT) {
         to = idx + 1
       } else {
         to = idx - 1
       }
-      if (to < 0 || to > this.persons.length - 1) return;
-      this.currentPerson = this.persons[to].icon;
+      if (to < 0 || to > this.dataset.length - 1) return;
+      this.age = this.dataset[to].id;
     });
   },
 
@@ -294,8 +282,7 @@ export default {
     width: 145px;
     text-align: center;
 
-    &--active,
-    &:hover {
+    &--active {
       color: $color-red;
     }
   }

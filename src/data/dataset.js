@@ -1,7 +1,7 @@
-export default {
-  baby: require('./baby.json'),
-  // toddler: require('./toddler.json'),
-  // pupul: require('./pupil.json'),
-  adult: require('./adult.json'),
+export default [
+  require('./baby.json'),
+  // require('./toddler.json'),
+  // require('./pupil.json'),
+  require('./adult.json'),
   // old: require('./old.json'),
-};
+];
