@@ -2,8 +2,11 @@
   <div id="app" class="app">
     <button @click="changeData(key)" v-for="(age, key) in dataset">{{ key }}</button>
 
-    <div class="persons">
-      <div class="persons__item" v-for="person in persons">
+    <div class="persons" ref="persons">
+      <div class="persons__item"
+           @click="currentPerson = person.icon"
+           :class="{ 'persons__item--active': person.icon === currentPerson }"
+           v-for="person in persons">
         <div class="persons__item-icon">
           <svg class="person">
             <use :xlink:href="require(`./assets/images/persons.svg`) + `#${person.icon}`"></use>
@@ -89,6 +92,7 @@ import Tbl from './components/Tbl.vue';
 import dataJSON from './data/dataset';
 import icons from './icons';
 import legend from './legend.json';
+import Hammer from 'hammerjs';
 
 const dataset = Object.entries(dataJSON).reduce((acc, [key, value]) => {
   acc[key] = prepareData(value);
@@ -120,6 +124,9 @@ export default {
   components: { Tbl },
   data() {
     return {
+      currentPerson: 'toddler',
+      hammer: null,
+
       dataset: dataset,
       age: 'baby',
       active: null,
@@ -160,6 +167,20 @@ export default {
   mounted() {
     window.addEventListener('load', this.calcHeights);
     this.calcHeights();
+    this.hammer = new Hammer(this.$refs.persons, {
+      directions: Hammer.DIRECTION_HORIZONTAL
+    });
+    this.hammer.on('swipe', (e) => {
+      const idx = this.persons.findIndex(person => person.icon === this.currentPerson);
+      let to;
+      if (e.direction === Hammer.DIRECTION_LEFT) {
+        to = idx + 1
+      } else {
+        to = idx - 1
+      }
+      if (to < 0 || to > this.persons.length - 1) return;
+      this.currentPerson = this.persons[to].icon;
+    });
   },
 
   beforeDestroy() {
@@ -272,6 +293,8 @@ export default {
     color: $color-icons;
     width: 145px;
     text-align: center;
+
+    &--active,
     &:hover {
       color: $color-red;
     }
