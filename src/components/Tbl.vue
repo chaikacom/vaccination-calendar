@@ -11,25 +11,30 @@
 <script>
   export default {
     props: [
-      'headers', 'rows', 'range'
+      'headers', 'rows', 'range', 'active'
     ],
 
     methods: {
       symbolClass(row, header) {
+        let classList = '';
         const t =  row.items.find(term => term.contains(header.value));
-        if (!t) return '';
+
+        if (!t) return classList;
+
         if (t.hasDuration()) {
           const ext = t.isExt(header.value);
           if (ext) {
-            let classList = 'start' ? 'from from--light' : 'to to--light';
-            return classList;
+            classList += ext === 'start' ? 'from from--light' : 'to to--light';
           } else {
-            if (t.from.value < this.range.from.value) return 'from from--light from--prev';
-            if (t.to.value > this.range.to.value) return 'to to--light to--next';
-            return 'line line--light'
+            classList += 'line line--light'
           };
+        } else {
+          classList = 'dot';
         }
-        return 'dot';
+        if (this.active) {
+          classList += !t.contains(this.active.value) ? " inactive" : '';
+        }
+        return classList;
       },
     },
   }
@@ -46,12 +51,12 @@
   }
   .tbl__cell {
     display: table-cell;
-    padding: 10px 0;
     min-width: 108px;
     max-width: 180px;
   }
   .tbl__cell-name {
-    padding-right: 40px;
+    font-size: 16px;
+    padding: 10px 40px 10px 0;
     width: 170px;
     vertical-align: middle;
   }
@@ -59,6 +64,7 @@
     text-align: center;
     padding: 0 9px;
     min-width: 90px;
+    font-size: 14px;
   }
   .tbl__cell-value {
     background-image: url(../assets/images/dot.jpg);
@@ -74,6 +80,13 @@
     display: flex;
     align-items: center;
     justify-content: center;
+    cursor: pointer;
+
+    &.active {
+      background: $color-red;
+      color: #fff;
+      border-color: $color-red;
+    }
   }
   .tbl__cell-icons {
     padding-right: 10px;

@@ -6,6 +6,10 @@
     color: $color-text;
     border-radius: 50%;
     background: currentColor;
+
+    &.inactive {
+        color: $color-border;
+    }
 }
 
 .from,
@@ -15,6 +19,10 @@
     position: relative;
     height: 5px;
     background: currentColor;
+
+    &.inactive {
+        color: $color-border;
+    }
 
     &--light {
         color: $color-arrow-light;

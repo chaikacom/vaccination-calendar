@@ -2,7 +2,7 @@
   <div id="app">
     <div class="grid">
       <div class="grid__aside">
-        <div class="tbl">
+        <div class="tbl" ref="tableHeight">
           <div class="tbl__row" v-for="item in items">
             <div class="tbl__cell tbl__cell-icons">
               <template v-if="item.icons">
@@ -21,15 +21,21 @@
       <div class="grid__main">
         <div class="grid__main-top">
           <div class="tbl" ref="headers">
-            <div class="tbl__cell tbl__cell-header" v-for="item in headers">
-              <div class="tbl__header-box">
-                {{ item.label }}
+            <div class="tbl__cell tbl__cell-header" v-for="header in headers">
+              <div class="tbl__header-box"
+                   :class="{ 'active': active && active.value === header.value }"
+                   @click="select(header)">
+                {{ header.label }}
               </div>
             </div>
           </div>
         </div>
         <div class="grid__main-center">
-          <tbl :headers="headers" :rows="items" :range="range"></tbl>
+          <tbl :headers="headers"
+               :rows="items"
+               :range="range"
+               :active="active"
+               ref="table"></tbl>
         </div>
         <div class="grid__main-bottom"></div>
       </div>
@@ -58,16 +64,16 @@ const ICONS = [
 
 
 const demoData1 = {
-  range: ['0/0/2', '0/8'],
+  range: ['0/2', '0/8'],
   items: [
     {
       icons: 'WORK_INFECT CHRON CONTACTS',
       name: 'Lorem',
-      items: ['0/1', '0/3', '0/0/3-7', '0/1', '0/4.5', { items: '0/5' }],
+      items: ['0/2', '0/3', '0/4.5', '0/7', { items: '0/5' }],
     },
     {
       name: 'Ipsum asd asd fwe qwqdqw dqw q ',
-      items: [['0/0/1', '0/2'], ['0/4', '0/9']],
+      items: [['0/1', '0/4'], ['0/5', '0/9']],
     }
   ],
 };
@@ -98,15 +104,37 @@ export default {
   components: { Tbl },
   data() {
     return {
+      active: null,
       range: data1.range,
       headers: data1.headers,
       items: data1.items
     }
   },
   mounted() {
+    window.addEventListener('load', e => {
+      const table = this.$refs.table;
+      const ref = this.$refs.tableHeight;
+      const heights = [].map.call(ref.querySelectorAll('.tbl__cell-name'), this.calcHeight);
+      console.log(heights);
+      table.$el.querySelectorAll('.tbl__row').forEach((row, index) => {
+        const height = heights[index];
+        row.querySelectorAll('.tbl__cell').forEach(cell => cell.style.height = height + 'px');
+      })
+    })
   },
 
   methods: {
+    select(item) {
+      this.active = this.active && this.active.value === item.value ? null : item;
+    },
+    calcHeight(element) {
+      const style = getComputedStyle(element);
+      const regexp = /\d+/g;
+      const top = style.paddingTop.match(regexp).join();
+      const bottom = style.paddingBottom.match(regexp).join();
+      const height = style.height.match(regexp).join();
+      return Number(top) + Number(height) + Number(bottom);
+    },
     getIcon(code) {
       return ICONS.find(icon => icon.code === code);
     }
@@ -115,6 +143,15 @@ export default {
 </script>
 
 <style lang="scss">
+  @font-face {
+    font-family: 'Gotham Pro';
+    src: url(./assets/fonts/gotham_pro/gotham_pro.woff);
+    font-weight: normal;
+  }
+
+  .body {
+    font-family: 'Gotham Pro';
+  }
 
   .terms {
     display: flex;
