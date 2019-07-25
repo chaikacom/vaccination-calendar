@@ -1,7 +1,10 @@
 $font-regular: 'Gotham Pro', sans-serif;
 
 .sup {
+    display: inline-block;
     font-size: 0.7em;
     text-transform: uppercase;
-    position: absolute;
+    transform: translateY(-0.5em);
+    margin: 0 0.3em;
+    //position: absolute;
 }

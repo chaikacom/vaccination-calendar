@@ -31,7 +31,7 @@
             </div>
             <div class="tbl__cell tbl__cell-name">
               <span class="tbl__cell-name-text" v-popover.top="{ event: 'hover', name: `name_${idx}` }">{{ item.name }}</span>
-              <span class="sup" v-if="item.note" style="margin-left: 0.35em">{{ item.note }}</span>
+              <span class="sup" v-if="item.note">{{ item.note }}</span>
               <popover v-if="item.hint && item.hint.html"
                        :name="`name_${idx}`"
                        v-html="item.hint.html"></popover>
@@ -86,6 +86,17 @@
       </li>
     </ul>
 
+    <div class="notes" v-if="data.notes">
+      <h3 class="notes__title">
+        Примечания
+      </h3>
+      <ul class="notes-list">
+        <li v-for="note in data.notes">
+          <span class="notes-list__note sup">{{ note.number }}</span>
+          <span class="notes-list__text" v-html="note.text"></span>
+        </li>
+      </ul>
+    </div>
     <tooltip></tooltip>
 
   </div>
@@ -329,4 +340,39 @@ export default {
   .draggable {
     cursor: grab;
   }
+
+  .notes {
+    margin-top: 50px;
+  }
+
+  .notes__title {
+    font-size: 14px;
+    text-transform: uppercase;
+    font-weight: bold;
+  }
+
+  .notes-list {
+    font-size: 14px;
+    margin: 0;
+    padding: 0;
+    list-style: none;
+    li {
+      position: relative;
+      margin-bottom: 1.25em;
+      &:last-child {
+        margin-bottom: 0;
+      }
+    }
+  }
+
+  .notes-list__note {
+    position: absolute;
+    left: 0;
+  }
+
+  .notes-list__text {
+    display: block;
+    padding-left: 15px;
+  }
+
 </style>
