@@ -38,12 +38,17 @@
       <div class="grid__main">
         <div class="grid__main-top">
           <div class="tbl" ref="headers">
-            <div class="tbl__cell tbl__cell-header" v-for="header in headers">
-              <div class="tbl__header-box"
-                   :class="{ 'active': active && active.value === header.value }"
-                   @click="select(header)">
-                {{ header.label }}
+            <div class="tbl__row">
+              <div class="tbl__cell tbl__cell-header" v-for="header in headers">
+                <div class="tbl__header-box"
+                     :class="{ 'active': active && active.value === header.value }"
+                     @click="select(header)">
+                  {{ header.label }}
+                </div>
               </div>
+            </div>
+            <div class="tbl__row">
+              <div class="tbl__cell tbl__cell-line tbl__cell-spacer" v-for="header in headers"></div>
             </div>
           </div>
         </div>
@@ -238,7 +243,7 @@ export default {
   }
 
   .grid__aside {
-    padding-top: 52px;
+    padding-top: 72px;
   }
 
   .grid__main {

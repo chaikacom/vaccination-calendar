@@ -1,7 +1,7 @@
 <template>
   <div class="tbl">
     <div class="tbl__row" v-for="termRow in terms">
-      <div class="tbl__cell tbl__cell-value" v-for="term in termRow">
+      <div class="tbl__cell tbl__cell-value tbl__cell-line" v-for="term in termRow">
         <template v-if="term">
           <div class="symbol"
                v-popover="{ event: 'hover', name: term.popover }"
@@ -99,12 +99,20 @@
     font-size: 14px;
   }
   .tbl__cell-value {
-    background-image: url(../assets/images/dot.jpg);
-    background-repeat: repeat-y;
-    background-position: 50% 0;
     text-align: center;
     vertical-align: middle;
   }
+
+  .tbl__cell-spacer {
+    height: 20px;
+  }
+
+  .tbl__cell-line {
+    background-image: url(../assets/images/dot.jpg);
+    background-repeat: repeat-y;
+    background-position: 50% 0;
+  }
+
   .tbl__header-box {
     border: 1px solid $color-border;
     border-radius: 26px;
