@@ -1,7 +1,10 @@
 <template>
   <div class="tbl">
-    <div class="tbl__row" v-for="termRow in terms">
-      <div class="tbl__cell tbl__cell-value tbl__cell-line tbl__cell-container" v-for="term in termRow">
+    <div class="tbl__row" v-for="(termRow, rowIndex) in terms">
+      <div class="tbl__cell tbl__cell-value tbl__cell-line tbl__cell-container"
+           @mouseenter="onRowHoverIn(rowIndex)"
+           @mouseleave="onRowHoverOut(rowIndex)"
+           v-for="term in termRow">
         <template v-if="term">
           <div class="symbol"
                v-popover="{ event: 'hover', name: term.popover }"
@@ -17,7 +20,7 @@
 <script>
   export default {
     props: [
-      'headers', 'rows', 'range', 'active'
+      'headers', 'rows', 'range', 'active', 'activeRow'
     ],
 
     data() {
@@ -32,10 +35,21 @@
           return this.headers.map((header, headerIndex) => {
             const term = row.items.find(term => term.contains(header.value));
             if (!term) return null;
+
+            const hasHover = this.activeRow !== null;
+            const hasActive = this.active !== null;
+            let activityClass = '';
+
+            if (hasActive || hasHover) {
+              const isActive = hasActive && term.contains(this.active.value);
+              const isHovered = hasHover && this.activeRow === rowIndex;
+              activityClass = !isActive && !isHovered ? ' inactive ' : '';
+            }
+
             return {
               popover: term.title ? `popover_${rowIndex}${headerIndex}` : null,
               title: term.title,
-              className: this.symbolClass(term, header)
+              className: this.symbolClass(term, header) + activityClass,
             }
           })
         })
@@ -45,6 +59,14 @@
     methods: {
       getTerm(row, header) {
         this.term = row.items.find(item => item.contains(header.value));
+      },
+
+      onRowHoverIn(index) {
+        this.$emit('rowchange', index);
+      },
+
+      onRowHoverOut() {
+        this.$emit('rowchange', null);
       },
 
       symbolClass(term, header) {
@@ -61,9 +83,6 @@
           };
         } else {
           classList = 'dot';
-        }
-        if (this.active) {
-          classList += !term.contains(this.active.value) ? " inactive" : '';
         }
         return classList;
       },
@@ -88,6 +107,10 @@
 
   .tbl__cell {
     display: table-cell;
+
+    &.highlighted {
+      background: #f7f7f7;
+    }
   }
 
   .tbl__cell-name {
@@ -96,6 +119,10 @@
     width: 170px;
     min-width: 170px;
     vertical-align: middle;
+
+    &.muted {
+      color: $color-border;
+    }
   }
 
   .tbl__cell-name-text {

@@ -29,7 +29,10 @@
                 </div>
               </template>
             </div>
-            <div class="tbl__cell tbl__cell-name">
+            <div class="tbl__cell tbl__cell-name"
+                 :class="{ 'muted': activeRow && activeRow !== idx }"
+                 @mouseleave="activeRow = null"
+                 @mouseenter="activeRow = idx">
               <span class="tbl__cell-name-text" v-popover.top="{ event: 'hover', name: `name_${idx}` }">{{ item.name }}</span>
               <span class="sup" v-if="item.note">{{ item.note }}</span>
               <popover v-if="item.hint && item.hint.html"
@@ -59,6 +62,8 @@
         <div class="grid__main-center">
           <tbl :headers="headers"
                :rows="items"
+               :active-row="activeRow"
+               @rowchange="activeRow = $event"
                :range="range"
                :active="active"
                ref="table"></tbl>
@@ -136,6 +141,7 @@ export default {
   components: { Tbl },
   data() {
     return {
+      highlight: null,
       hammer: null,
       scrollable: null,
       dataset: dataset,
@@ -143,6 +149,7 @@ export default {
       active: null,
       icons,
       legend,
+      activeRow: null,
     }
   },
 
