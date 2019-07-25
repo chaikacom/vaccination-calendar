@@ -23,7 +23,7 @@
               <template v-if="item.icons">
                 <div class="icons-set icons-set--sm">
                   <img :src="require(`./assets/images/${getIcon(icon).image}.svg`)"
-                       :title="getIcon(icon).name"
+                       v-popover.top="{ name: 'icon_' + getIcon(icon).code }"
                        class="tbl__cell-icon"
                        v-for="icon in item.icons.split(' ')">
                 </div>
@@ -76,9 +76,9 @@
       <template v-for="icon in icons">
         <img :src="require(`./assets/images/${icon.image}.svg`)"
              :title="icon.name"
-             v-popover.left="{ name: icon.code }"
+             v-popover.top="{ name: 'icon_' + icon.code }"
              class="icons-description__item icons-set">
-        <popover :name="icon.code">{{ icon.name }}</popover>
+        <popover :name="'icon_' + icon.code">{{ icon.name }}</popover>
       </template>
     </div>
 
