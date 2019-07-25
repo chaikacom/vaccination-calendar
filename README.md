@@ -1,3 +1,13 @@
+# Todo:
+- Row hightlight
+- Mobile view for persons
+- Sticky headers
+- Arrows style
+- Outer arrows
+- Notes list
+- Links in popovers
+- Attached document
+
 # vaccination
 
 ## Project setup
