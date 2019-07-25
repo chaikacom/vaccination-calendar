@@ -102,6 +102,14 @@
         </li>
       </ul>
     </div>
+
+    <a href="prikaz.pdf" class="document">
+      <img src="./assets/images/pdf-icon.svg" class="document__icon">
+      <div class="document__text">
+        Приказ МЗ&nbsp;РФ &#8470;&nbsp;125н от&nbsp;21.03.2014&nbsp;об утверждении национального календаря профилактических прививок и&nbsp;календаря профилактических прививок по&nbsp;эпидемическим показаниям
+      </div>
+    </a>
+
     <tooltip></tooltip>
 
   </div>
@@ -257,6 +265,7 @@ export default {
   }
 
   .body {
+    background: #FAFBFC;
     font-family: 'Gotham Pro';
   }
 
@@ -382,4 +391,22 @@ export default {
     padding-left: 15px;
   }
 
+  .document {
+    background: #fff;
+    border: 1px solid $color-border;
+    padding: 40px 60px;
+    display: flex;
+    max-width: 800px;
+    border-radius: 4px;
+    margin: 50px 0;
+    text-decoration: none;
+    &:hover {
+      color: $color-arrow-light;
+    }
+  }
+
+  .document__icon {
+    flex: 0 0 auto;
+    margin-right: 30px;
+  }
 </style>
