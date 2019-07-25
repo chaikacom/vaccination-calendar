@@ -18,7 +18,7 @@
     <div class="grid">
       <div class="grid__aside">
         <div class="tbl" ref="tableHeight">
-          <div class="tbl__row" v-for="item in items">
+          <div class="tbl__row" v-for="(item, idx) in items">
             <div class="tbl__cell tbl__cell-icons">
               <template v-if="item.icons">
                 <div class="icons-set icons-set--sm">
@@ -30,7 +30,11 @@
               </template>
             </div>
             <div class="tbl__cell tbl__cell-name">
-              {{ item.name }}
+              <span class="tbl__cell-name-text" v-popover.top="{ event: 'hover', name: `name_${idx}` }">{{ item.name }}</span>
+              <span class="sup" v-if="item.note" style="margin-left: 0.35em">{{ item.note }}</span>
+              <popover v-if="item.hint && item.hint.html"
+                       :name="`name_${idx}`"
+                       v-html="item.hint.html"></popover>
             </div>
           </div>
         </div>
@@ -103,20 +107,12 @@ const dataset = dataJSON.map(prepareData);
 function prepareData(data) {
   let headers = [];
   const rows = data.items.map((row) => {
-    return {
-      icons: row.icons,
-      name: row.name,
-      items: row.items.map(parser.parseItem),
-    }
+    return Object.assign({}, row, { items: row.items.map(parser.parseItem) })
   });
-
   const range = parser.parseArray(data.range);
-
-  rows.forEach((row) => {
-    row.items.forEach(term => headers.push(term));
-  })
+  rows.forEach(row => row.items.forEach(term => headers.push(term)));
   headers = parser.getAllValues(headers, range);
-  return { id: data.id, label: data.label, range: range, headers, items: rows };
+  return Object.assign({}, data, { range, items: rows, headers });
 }
 
 export default {

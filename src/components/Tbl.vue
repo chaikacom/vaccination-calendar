@@ -77,14 +77,17 @@
   .tbl {
     display: table;
   }
+
   .tbl__row {
     display: table-row;
   }
+
   .tbl__cell {
     display: table-cell;
     min-width: 108px;
     max-width: 180px;
   }
+
   .tbl__cell-name {
     font-size: 16px;
     padding: 10px 40px 10px 0;
@@ -92,12 +95,21 @@
     min-width: 170px;
     vertical-align: middle;
   }
+
+  .tbl__cell-name-text {
+    cursor: pointer;
+    &:hover {
+      color: $color-arrow-light;
+    }
+  }
+
   .tbl__cell-header {
     text-align: center;
     padding: 0 9px;
     min-width: 90px;
     font-size: 14px;
   }
+
   .tbl__cell-value {
     text-align: center;
     vertical-align: middle;
@@ -108,7 +120,7 @@
   }
 
   .tbl__cell-line {
-    background-image: url(../assets/images/dot.jpg);
+    background-image: url(../assets/images/dot.svg);
     background-repeat: repeat-y;
     background-position: 50% 0;
   }
