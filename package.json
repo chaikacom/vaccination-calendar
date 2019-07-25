@@ -12,6 +12,7 @@
     "d3": "^5.9.7",
     "hammerjs": "^2.0.8",
     "normalize.css": "^8.0.1",
+    "scrollbooster": "^1.1.0",
     "simplebar": "^4.1.0",
     "vue": "^2.6.10",
     "vue-js-popover": "^1.1.8"

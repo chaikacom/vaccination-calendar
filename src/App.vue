@@ -39,7 +39,7 @@
           </div>
         </div>
       </div>
-      <div class="grid__main">
+      <div class="grid__main draggable" ref="main">
         <div class="grid__main-top">
           <div class="tbl" ref="headers">
             <div class="tbl__row">
@@ -101,6 +101,7 @@ import dataJSON from './data/dataset';
 import icons from './icons';
 import legend from './legend.json';
 import Hammer from 'hammerjs';
+import ScrollBooster from 'scrollbooster';
 
 const dataset = dataJSON.map(prepareData);
 
@@ -121,7 +122,7 @@ export default {
   data() {
     return {
       hammer: null,
-
+      scrollable: null,
       dataset: dataset,
       age: 'baby',
       active: null,
@@ -169,9 +170,20 @@ export default {
       if (to < 0 || to > this.dataset.length - 1) return;
       this.age = this.dataset[to].id;
     });
+
+    const draggable = this.$refs.main;
+    this.scrollable = new ScrollBooster({
+      viewport: draggable,
+      friction: 0.5,
+      mode: 'x',
+      onUpdate(e) {
+        this.viewport.scrollLeft = e.position.x;
+      },
+    });
   },
 
   beforeDestroy() {
+    this.scrollable.destroy();
     window.removeEventListener('load', this.calcHeights);
   },
 
@@ -307,5 +319,9 @@ export default {
     font-weight: bold;
     font-size: 14px;
     line-height: 16px;
+  }
+
+  .draggable {
+    cursor: grab;
   }
 </style>
