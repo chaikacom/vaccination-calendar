@@ -1,7 +1,7 @@
 <template>
   <div class="tbl">
     <div class="tbl__row" v-for="termRow in terms">
-      <div class="tbl__cell tbl__cell-value tbl__cell-line" v-for="term in termRow">
+      <div class="tbl__cell tbl__cell-value tbl__cell-line tbl__cell-container" v-for="term in termRow">
         <template v-if="term">
           <div class="symbol"
                v-popover="{ event: 'hover', name: term.popover }"
@@ -74,6 +74,10 @@
 <style lang="scss">
   @import "../assets/stylesheets/base/index.scss";
 
+  $cell-normal-width: 108px;
+  $cell-header-space: 9px;
+  $cell-header-width: $cell-normal-width - $cell-header-space * 2;
+
   .tbl {
     display: table;
   }
@@ -84,8 +88,6 @@
 
   .tbl__cell {
     display: table-cell;
-    min-width: 108px;
-    max-width: 180px;
   }
 
   .tbl__cell-name {
@@ -105,14 +107,20 @@
 
   .tbl__cell-header {
     text-align: center;
-    padding: 0 9px;
-    min-width: 90px;
+    padding: 0 $cell-header-space;
+    min-width: $cell-header-width;
+    width: $cell-header-width;
     font-size: 14px;
   }
 
   .tbl__cell-value {
     text-align: center;
     vertical-align: middle;
+  }
+
+  .tbl__cell-container {
+    width: $cell-normal-width;
+    min-width: $cell-normal-width;
   }
 
   .tbl__cell-spacer {
@@ -141,9 +149,12 @@
     }
   }
   .tbl__cell-icons {
-    padding-right: 10px;
     vertical-align: middle;
     text-align: right;
+
+    .icons-set {
+      margin-right: 10px;
+    }
   }
 
   .legend {
