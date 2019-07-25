@@ -267,6 +267,10 @@ export default {
     }
   }
 
+  .icons-description {
+    margin: 50px 0;
+  }
+
   .person {
     width: 1em;
     height: 1em;
@@ -275,7 +279,9 @@ export default {
   .persons {
     display: flex;
     justify-content: space-around;
+    margin: 50px 0;
   }
+
   .persons__item {
     cursor: pointer;
     color: $color-icons;
@@ -286,6 +292,7 @@ export default {
       color: $color-red;
     }
   }
+
   .persons__item-icon {
     text-align: center;
     margin-bottom: 20px;
@@ -294,6 +301,7 @@ export default {
       vertical-align: top;
     }
   }
+
   .persons__item-label {
     text-transform: uppercase;
     font-weight: bold;
