@@ -108,7 +108,11 @@ const dataset = dataJSON.map(prepareData);
 function prepareData(data) {
   let headers = [];
   const rows = data.items.map((row) => {
-    return Object.assign({}, row, { items: row.items.map(parser.parseItem) })
+    return Object.assign({}, row, { items: row.items.map((i) => {
+      const item = parser.parseItem(i);
+      item.title = parser.parseTitle(item.title, data.titles);
+      return item;
+    }) })
   });
   const range = parser.parseArray(data.range);
   rows.forEach(row => row.items.forEach(term => headers.push(term)));
@@ -175,6 +179,7 @@ export default {
     this.scrollable = new ScrollBooster({
       viewport: draggable,
       friction: 0.5,
+      textSelection: true,
       mode: 'x',
       onUpdate(e) {
         this.viewport.scrollLeft = e.position.x;

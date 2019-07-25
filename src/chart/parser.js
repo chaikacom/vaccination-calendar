@@ -60,6 +60,12 @@ export function getAllValues(terms, range) {
     .filter(term => range.contains(term.value));
 }
 
+export function parseTitle(title, titles = []) {
+  const key = title || 'DEFAULT';
+  const found = titles.find(item => item.code === key);
+  return found ? found.text : (title || null);
+}
+
 export function parseObject(object) {
   const isArray = Array.isArray(object.items);
   let numbers;
