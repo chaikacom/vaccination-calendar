@@ -219,9 +219,9 @@
           const table = this.$refs.table;
           const ref = this.$refs.tableHeight;
           const heights = [].map.call(ref.querySelectorAll('.tbl__cell-name'), this.calcHeight);
-          table.$el.querySelectorAll('.tbl__row').forEach((row, index) => {
+          [].forEach.call(table.$el.querySelectorAll('.tbl__row'), (row, index) => {
             const height = heights[index];
-            row.querySelectorAll('.tbl__cell').forEach(cell => cell.style.height = height + 'px');
+            [].forEach.call(row.querySelectorAll('.tbl__cell'), cell => cell.style.height = height + 'px');
           });
         })
       },
@@ -233,7 +233,7 @@
       },
       calcHeight(element) {
         const style = getComputedStyle(element);
-        const regexp = /\d+/g;
+        const regexp = /\d+.?\d+/g;
         const top = style.paddingTop.match(regexp).join();
         const bottom = style.paddingBottom.match(regexp).join();
         const height = style.height.match(regexp).join();
