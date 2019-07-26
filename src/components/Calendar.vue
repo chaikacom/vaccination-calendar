@@ -6,9 +6,12 @@
            :class="{ 'persons__item--active': person.id === age }"
            v-for="person in dataset">
         <div class="persons__item-icon">
-          <svg class="person">
+          <svg class="person" v-if="!IEVersion">
             <use :xlink:href="require(`../assets/images/persons.svg`) + `#${person.id}`"></use>
           </svg>
+          <template v-else>
+            <img :src="require(`../assets/images/persons/${person.id}.svg`)">
+          </template>
         </div>
         <div class="persons__item-label">{{ person.label }}</div>
       </div>
@@ -124,6 +127,7 @@
   import legend from '../legend.json';
   import Hammer from 'hammerjs';
   import ScrollBooster from 'scrollbooster';
+  import browserMixin from '../mixins/browser';
 
   const dataset = dataJSON.map(prepareData);
 
@@ -144,6 +148,7 @@
 
   export default {
     components: { Tbl },
+    mixins: [ browserMixin ],
     data() {
       return {
         highlight: null,
@@ -317,7 +322,6 @@
   .person {
     width: 1em;
     height: 1em;
-    color: $color-arrow-light;
   }
 
   .persons {
