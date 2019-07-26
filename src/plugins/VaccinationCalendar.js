@@ -1,4 +1,4 @@
-import Popover from 'vue-js-popover';
+import Popover from 'vue-js-popover/src';
 import Calendar from '../components/Calendar.vue';
 
 const defaultOptions = {
