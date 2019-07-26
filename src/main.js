@@ -1,12 +1,13 @@
 import Vue from 'vue';
-import Popover from 'vue-js-popover';
 import App from './App.vue';
-import SyncScroll from './directives/sync-scroll';
+import VaccinationCalendar from './plugins/VaccinationCalendar';
 
-Vue.use(Popover, { tooltip: true });
+// import SyncScroll from './directives/sync-scroll';
+// Vue.directive('sync-scroll', SyncScroll);
+
 Vue.config.productionTip = false;
 
-Vue.directive('sync-scroll', SyncScroll);
+Vue.use(VaccinationCalendar);
 
 new Vue({
   render: h => h(App),

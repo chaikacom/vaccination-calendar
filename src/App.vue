@@ -1,14 +1,13 @@
 <template>
   <div id="app" class="app">
-    <chart></chart>
+    <vaccination-calendar></vaccination-calendar>
   </div>
 </template>
 
 <script>
 import 'normalize.css';
-import Chart from './components/Chart.vue';
 
 export default {
-  components: { Chart },
+  components: {},
 };
 </script>

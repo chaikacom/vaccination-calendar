@@ -1,5 +1,5 @@
 <template>
-  <div class="chart app">
+  <div class="chart">
     <div class="persons" ref="persons">
       <div class="persons__item"
            @click="age = person.id"
@@ -29,7 +29,7 @@
               </template>
             </div>
             <div class="tbl__cell tbl__cell-name"
-                 :class="{ 'muted': activeRow && activeRow !== idx }"
+                 :class="{ 'muted': activeRow !== null && activeRow !== idx }"
                  @mouseleave="activeRow = null"
                  @mouseenter="activeRow = idx">
               <span class="tbl__cell-name-text" v-popover.top="{ event: 'hover', name: `name_${idx}` }">{{ item.name }}</span>
@@ -74,7 +74,6 @@
     <div class="icons-description icons-set">
       <template v-for="icon in icons">
         <img :src="require(`../assets/images/${icon.image}.svg`)"
-             :title="icon.name"
              v-popover.top="{ name: 'icon_' + icon.code }"
              class="icons-description__item icons-set">
         <popover :name="'icon_' + icon.code">{{ icon.name }}</popover>
@@ -142,7 +141,6 @@
   }
 
   export default {
-    name: 'app',
     components: { Tbl },
     data() {
       return {
@@ -257,13 +255,13 @@
     font-weight: normal;
   }
 
-  .app {
-    color: $color-text;
-  }
-
   .body {
     background: #FAFBFC;
     font-family: 'Gotham Pro';
+  }
+
+  .chart {
+    color: $color-text;
   }
 
   .terms {
@@ -295,6 +293,7 @@
       width: 1em;
       height: 1em;
       font-size: 35px;
+      cursor: pointer;
 
       &:last-child {
         margin-right: 0;
@@ -395,8 +394,9 @@
     display: flex;
     max-width: 800px;
     border-radius: 4px;
-    margin: 50px 0;
+    margin: 50px auto;
     text-decoration: none;
+    color: inherit;
     &:hover {
       color: $color-arrow-light;
     }
