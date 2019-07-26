@@ -102,7 +102,9 @@
     </div>
 
     <a href="prikaz.pdf" class="document">
-      <img src="../assets/images/pdf-icon.svg" class="document__icon">
+      <div class="document__icon">
+        <img src="../assets/images/pdf-icon.svg">
+      </div>
       <div class="document__text">
         Приказ МЗ&nbsp;РФ &#8470;&nbsp;125н от&nbsp;21.03.2014&nbsp;об утверждении национального календаря профилактических прививок и&nbsp;календаря профилактических прививок по&nbsp;эпидемическим показаниям
       </div>
@@ -283,6 +285,7 @@
 
   .grid__main {
     overflow: auto;
+    flex: 1 1 auto;
   }
 
   .icons-set {
@@ -314,6 +317,7 @@
   .person {
     width: 1em;
     height: 1em;
+    color: $color-arrow-light;
   }
 
   .persons {
@@ -392,6 +396,7 @@
     border: 1px solid $color-border;
     padding: 40px 60px;
     display: flex;
+    flex-wrap: nowrap;
     max-width: 800px;
     border-radius: 4px;
     margin: 50px auto;
@@ -405,5 +410,9 @@
   .document__icon {
     flex: 0 0 auto;
     margin-right: 30px;
+  }
+
+  .document__text {
+    flex: 1 1 auto;
   }
 </style>
