@@ -8,7 +8,6 @@
         <template v-if="term">
           <div class="symbol"
                v-popover="{ event: 'hover', name: term.popover }"
-               :title="term.title"
                :class="term.className"></div>
           <popover event="hover" v-if="term.popover" :name="term.popover">{{ term.title }}</popover>
         </template>
