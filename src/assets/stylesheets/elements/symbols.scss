@@ -28,11 +28,11 @@
         color: $color-border;
     }
 
-    &--light {
+    &.light {
         color: $color-arrow-light;
     }
 
-    &--dark {
+    &.dark {
         color: $color-arrow-dark
     }
 }

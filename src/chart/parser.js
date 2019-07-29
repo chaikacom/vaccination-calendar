@@ -78,6 +78,7 @@ export function parseObject(object) {
     label = parseLabel(term);
   }
   return new Term({
+    epid: object.epid,
     duration: isArray ? object.items.map(parseItem) : null,
     value: isArray ? null : termToValue(term),
     label,

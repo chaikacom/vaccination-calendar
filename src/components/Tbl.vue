@@ -9,7 +9,10 @@
           <div class="symbol"
                v-popover="{ event: 'hover', name: term.popover }"
                :class="term.className"></div>
-          <popover event="hover" v-if="term.popover" :name="term.popover">{{ term.title }}</popover>
+          <popover event="hover"
+                   v-if="term.popover"
+                   v-html="term.title"
+                   :name="term.popover"></popover>
         </template>
       </div>
     </div>
@@ -45,10 +48,13 @@
               activityClass = !isActive && !isHovered ? ' inactive ' : '';
             }
 
+            const mainClass = this.symbolClass(term, header);
+            const colorClass = term.epid ? 'light' : 'dark';
+
             return {
               popover: term.title ? `popover_${rowIndex}${headerIndex}` : null,
               title: term.title,
-              className: this.symbolClass(term, header) + activityClass,
+              className: `${mainClass} ${colorClass} ${activityClass}`,
             }
           })
         })
@@ -76,9 +82,9 @@
         if (term.hasDuration()) {
           const ext = term.isExt(header.value);
           if (ext) {
-            classList += ext === 'start' ? 'from from--light' : 'to to--light';
+            classList += ext === 'start' ? 'from' : 'to';
           } else {
-            classList += 'line line--light'
+            classList += 'line'
           };
         } else {
           classList = 'dot';
@@ -118,16 +124,18 @@
     width: 170px;
     min-width: 170px;
     vertical-align: middle;
-
-    &.muted {
-      color: $color-border;
-    }
   }
 
   .tbl__cell-name-text {
     cursor: pointer;
     &:hover {
       color: $color-arrow-light;
+    }
+  }
+
+  .tbl__cell-name-inner {
+    *.muted > & {
+      color: $color-border;
     }
   }
 

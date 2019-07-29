@@ -35,8 +35,10 @@
                  :class="{ 'muted': activeRow !== null && activeRow !== idx }"
                  @mouseleave="activeRow = null"
                  @mouseenter="activeRow = idx">
-              <span class="tbl__cell-name-text" v-popover.top="{ event: 'hover', name: `name_${idx}` }">{{ item.name }}</span>
-              <span class="sup" v-if="item.note">{{ item.note }}</span>
+              <div class="tbl__cell-name-inner">
+                <span class="tbl__cell-name-text" v-popover.top="{ event: 'hover', name: `name_${idx}` }">{{ item.name }}</span>
+                <span class="sup" v-if="item.note">{{ item.note }}</span>
+              </div>
               <popover v-if="item.hint && item.hint.html"
                        :name="`name_${idx}`"
                        v-html="item.hint.html"></popover>
