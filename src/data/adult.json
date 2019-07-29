@@ -2,16 +2,262 @@
   "id": "adult",
   "label": "Взрослые",
   "range": ["18", "55"],
+  "titles": [
+    { "code": "DEFAULT", "text": "В&nbsp;соответствии с&nbsp;инструкцией по&nbsp;применению препаратов" },
+    { "code": "INSTR", "text": "В&nbsp;соответствии с&nbsp;инструкцией по&nbsp;применению препаратов" },
+    { "code": "INSTR_VAC", "text": "В&nbsp;соответствии с&nbsp;инструкцией по&nbsp;применению препарата отдельно или в&nbsp;составе комбинированной вакцины" },
+    { "code": "EVERY_10", "text": "Каждые 10 лет" },
+    { "code": "TO_35_INCL", "text": "До&nbsp;35&nbsp;лет включительно" },
+    { "code": "ANNUAL", "text": "Ежегодно" },
+    { "code": "WOMAN_TO_25_NOT_YET", "text": "Женщины до&nbsp;25&nbsp;лет, не&nbsp;болевшие и&nbsp;не&nbsp;привитые ранее" },
+    { "code": "ADULT_36_55_RISK", "text": "Взрослые от&nbsp;36&nbsp;до&nbsp;55&nbsp;лет, относящие к&nbsp;группам риска" },
+    { "code": "VERY_LONG_TEXT", "text": "Взрослые от&nbsp;18&nbsp;до&nbsp;55&nbsp;лет, не&nbsp;привитые ранее; контактные лица из&nbsp;очагов заболевания, не&nbsp;болевшие, не&nbsp;привитые ранее и&nbsp;не&nbsp;имеющие сведений о&nbsp;профилактических прививках против гепатита&nbsp;В" },
+    { "code": "ANNUAL_RISK_1", "text": "Ежегодно группы риска <span class='sup'>1</span>" }
+  ],
+  "notes": [
+    { "number": 1, "text": "" },
+    { "number": 2, "text": "" },
+    { "number": 3, "text": "" },
+    { "number": 4, "text": "" },
+    { "number": 5, "text": "" },
+    { "number": 6, "text": "" },
+    { "number": 7, "text": "" }
+  ],
   "items": [
     {
-      "icons": "WORK_INFECT LIVE_TERR",
-      "name": "Gwgtj",
-      "items": ["18", "20", { "items": "45", "title": "Fourty five" }]
+      "name": "Дифтерия",
+      "note": "",
+      "hint": {
+        "html": "Вакцина: анатоксин, обычно в&nbsp;составе комбинированной вакцины.",
+        "link": ""
+      },
+      "items": [["18", "100500"]]
     },
     {
+      "name": "Столбняк",
+      "note": "",
+      "hint": {
+        "html": "Вакцина: анатоксин, обычно в&nbsp;составе комбинированной вакцины.",
+        "link": ""
+      },
+      "items": [["18", "100500"]]
+    },
+    {
+      "name": "Корь",
+      "note": "1",
+      "hint": {
+        "html": "Вакцина: живая ослабленная, отдельная или в&nbsp;составе комбинированной.",
+        "link": ""
+      },
+      "items": [["18", "35"], { "title": "ADULT_36_55_RISK", "items": ["35", "100500"] }]
+    },
+    {
+      "name": "Краснуха",
+      "note": "",
+      "hint": {
+        "html": "Вакцина: живая ослабленная, отдельная или в&nbsp;составе комбинированной.",
+        "link": ""
+      },
+      "items": [{ "title": "WOMAN_TO_25_NOT_YET", "items": ["18", "25"] }]
+    },
+    {
+      "name": "Гепатит В",
+      "note": "",
+      "hint": {
+        "html": "Вакцина: микрочастицы убитого вируса.",
+        "link": ""
+      },
+      "items": [{ "title": "VERY_LONG_TEXT", "items": ["18", "100500"] }]
+    },
+    {
+      "name": "Грипп",
+      "note": "2",
+      "icons": "WORK_INFECT WAR CHRON",
+      "hint": {
+        "html": "Вакцина: убитая, содержит микрочастицы 3&nbsp;подтипов вируса.",
+        "link": ""
+      },
+      "items": [{ "title": "ANNUAL_RISK_1", "items": ["18", "100500"] }]
+    },
+    {
+      "name": "Пневмококковая инфекция",
+      "note": "3,4",
+      "icons": "CHRON",
+      "hint": {
+        "html": "Вакцина: убитая, с&nbsp;2&nbsp;мес (13&nbsp;серотипов микроба) и&nbsp;с&nbsp;2&nbsp;лет (23&nbsp;серотипа).",
+        "link": ""
+      },
+      "items": [{ "epid": true, "items": ["18", "100500"] }]
+    },
+    {
+      "name": "Гепатит А",
+      "note": "3,5",
+      "icons": "WORK_INFECT LIVE_TERR VISIT_TERR CONTACTS",
+      "hint": {
+        "html": "Вакцины: убитые (инактивированные).",
+        "link": ""
+      },
+      "items": [{ "epid": true, "items": ["18", "100500"] }]
+    },
+    {
+      "name": "Менингококковая инфекция",
+      "note": "3,6",
+      "icons": "LIVE_TERR WAR CONTACTS",
+      "hint": {
+        "html": "Вакцина: убитая, защищает от&nbsp;наиболее распространенных серотипов бактерии.",
+        "link": ""
+      },
+      "items": [{ "epid": true, "items": ["18", "100500"] }]
+    },
+    {
+      "name": "Бешенство",
+      "note": "3,7",
+      "icons": "WORK_INFECT",
+      "hint": {
+        "html": "Вакцина: убитый вирус.",
+        "link": ""
+      },
+      "items": [{ "epid": true, "items": ["18", "100500"] }]
+    },
+    {
+      "name": "Бруцеллез",
+      "note": "3,8",
+      "icons": "WORK_INFECT",
+      "hint": {
+        "html": "Вакцина: убитая бактерия.",
+        "link": ""
+      },
+      "items": [{ "epid": true, "items": ["18", "100500"] }]
+    },
+    {
+      "name": "Брюшной тиф",
+      "note": "3,9",
+      "icons": "WORK_INFECT LIVE_TERR VISIT_TERR CONTACTS",
+      "hint": {
+        "html": "Вакцины: частицы бактерии.",
+        "link": ""
+      },
+      "items": [{ "epid": true, "items": ["18", "100500"] }]
+    },
+    {
+      "name": "Ветряная оспа",
+      "note": "3,10",
+      "icons": "WAR",
+      "hint": {
+        "html": "Вакцина: живая ослабленная.",
+        "link": ""
+      },
+      "items": [{ "epid": true, "items": ["18", "100500"] }]
+    },
+    {
+      "name": "Желтая лихорадка",
+      "note": "3,11",
       "icons": "VISIT_TERR",
-      "name": "Ousfwef",
-      "items": ["21", "35"]
+      "hint": {
+        "html": "Вакцина: живая ослабленная.",
+        "link": ""
+      },
+      "items": [{ "epid": true, "items": ["18", "100500"] }]
+    },
+    {
+      "name": "Клещевой вирусный энцефалит",
+      "note": "3,12",
+      "icons": "WORK_INFECT LIVE_TERR VISIT_TERR",
+      "hint": {
+        "html": "Вакцина: убитый вирус.",
+        "link": ""
+      },
+      "items": [{ "epid": true, "items": ["18", "100500"] }]
+    },
+    {
+      "name": "Лептоспироз",
+      "note": "3,13",
+      "icons": "WORK_INFECT",
+      "hint": {
+        "html": "Вакцина: убитая бактерия.",
+        "link": ""
+      },
+      "items": [{ "epid": true, "items": ["18", "100500"] }]
+    },
+    {
+      "name": "Лихорадки Ку",
+      "note": "3,14",
+      "icons": "WORK_INFECT",
+      "hint": {
+        "html": "Вакцина: живая ослабленная.",
+        "link": ""
+      },
+      "items": [{ "epid": true, "items": ["18", "100500"] }]
+    },
+    {
+      "name": "Полиомиелит",
+      "note": "3,15",
+      "icons": "WORK_INFECT CONTACTS",
+      "hint": {
+        "html": "Вакцина: живая ослабленная или убитая (не&nbsp;может вызвать инфекцию), отдельная или в&nbsp;составе комбинированной.",
+        "link": ""
+      },
+      "items": [{ "epid": true, "items": ["18", "100500"] }]
+    },
+    {
+      "name": "Сибирская язва",
+      "note": "3,16",
+      "icons": "WORK_INFECT",
+      "hint": {
+        "html": "Вакцина: живая ослабленная.",
+        "link": ""
+      },
+      "items": [{ "epid": true, "items": ["18", "100500"] }]
+    },
+    {
+      "name": "Туляремия",
+      "note": "3,17",
+      "icons": "WORK_INFECT LIVE_TERR",
+      "hint": {
+        "html": "Вакцина: живая ослабленная.",
+        "link": ""
+      },
+      "items": [{ "epid": true, "items": ["18", "100500"] }]
+    },
+    {
+      "name": "Холера",
+      "note": "1,18",
+      "icons": "VISIT_TERR CONTACTS",
+      "hint": {
+        "html": "Вакцины: живая ослабленная или убитая.",
+        "link": ""
+      },
+      "items": [{ "epid": true, "items": ["18", "100500"] }]
+    },
+    {
+      "name": "Чума",
+      "note": "3,19",
+      "icons": "WORK_INFECT LIVE_TERR",
+      "hint": {
+        "html": "Вакцина: живая ослабленная.",
+        "link": ""
+      },
+      "items": [{ "epid": true, "items": ["18", "100500"] }]
+    },
+    {
+      "name": "Шигеллез",
+      "note": "3,20",
+      "icons": "WORK_INFECT VISIT_TERR CONTACTS",
+      "hint": {
+        "html": "Вакцина: частицы (антигены) бактерии.",
+        "link": ""
+      },
+      "items": [{ "epid": true, "items": ["18", "100500"] }]
+    },
+    {
+      "name": "Эпидемический паротит",
+      "note": "3,21",
+      "icons": "CONTACTS",
+      "hint": {
+        "html": "Вакцина: живая ослабленная, отдельная или в составе комбинированной.",
+        "link": ""
+      },
+      "items": [{ "epid": true, "items": ["18", "100500"] }]
     }
   ]
 }
