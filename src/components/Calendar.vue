@@ -365,6 +365,7 @@
 
   .notes {
     margin-top: 50px;
+    max-width: 840px;
   }
 
   .notes__title {
