@@ -3,5 +3,5 @@ export default [
   require('./toddler.json'),
   require('./pupil.json'),
   require('./adult.json'),
-  // old: require('./old.json'),
+  require('./old.json'),
 ];
