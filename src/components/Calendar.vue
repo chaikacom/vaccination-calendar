@@ -52,7 +52,7 @@
       </div>
       <div class="grid__main draggable" ref="main">
         <div class="grid__main-top">
-          <div class="tbl" ref="headers">
+          <div class="tbl tbl--header" ref="headers">
             <div class="tbl__row">
               <div class="tbl__cell tbl__cell-header" v-for="header in headers">
                 <div class="tbl__header-box"
@@ -69,6 +69,7 @@
         </div>
         <div class="grid__main-center">
           <tbl :headers="headers"
+               :widths="widths"
                :rows="items"
                :active-row="activeRow"
                @rowchange="activeRow = $event"
@@ -136,6 +137,7 @@
   import browserMixin from '../mixins/browser';
 
   const dataset = dataJSON.map(prepareData);
+  const digitsRegexp = /\d+(.\d+)?/g;
 
   function prepareData(data) {
     let headers = [];
@@ -170,6 +172,7 @@
         legend,
         activeRow: null,
         showNotes: false,
+        widths: [],
       }
     },
 
@@ -192,12 +195,15 @@
       data() {
         this.active = null;
         this.calcHeights();
+        this.calcWidths();
       }
     },
 
     mounted() {
       window.addEventListener('load', this.calcHeights);
+      window.addEventListener('load', this.calcWidths);
       this.calcHeights();
+      this.calcWidths()
       this.hammer = new Hammer(this.$refs.persons, {
         directions: Hammer.DIRECTION_HORIZONTAL
       });
@@ -241,6 +247,17 @@
         if (dir === 'next') return currentIndex >= (this.dataset.length - 1) ? 'disabled' : '';
         if (dir === 'prev') return currentIndex <= 0 ? 'disabled' : '';
       },
+      calcWidths() {
+        this.$nextTick(() => {
+          this.widths = [].map.call(this.$refs.headers.querySelectorAll('.tbl__cell-header'), (el) => {
+            const style = getComputedStyle(el);
+            const left = style.paddingLeft.match(digitsRegexp).join();
+            const right = style.paddingRight.match(digitsRegexp).join();
+            const width = style.width.match(digitsRegexp).join();
+            return Number(left) + Number(right) + Number(width);
+          });
+        });
+      },
       calcHeights() {
         this.$nextTick(() => {
           const table = this.$refs.table;
@@ -250,7 +267,7 @@
             const height = heights[index];
             [].forEach.call(row.querySelectorAll('.tbl__cell'), cell => cell.style.height = height + 'px');
           });
-        })
+        });
       },
       changeData(key) {
         this.age = key;
@@ -260,10 +277,9 @@
       },
       calcHeight(element) {
         const style = getComputedStyle(element);
-        const regexp = /\d+.?\d+/g;
-        const top = style.paddingTop.match(regexp).join();
-        const bottom = style.paddingBottom.match(regexp).join();
-        const height = style.height.match(regexp).join();
+        const top = style.paddingTop.match(digitsRegexp).join();
+        const bottom = style.paddingBottom.match(digitsRegexp).join();
+        const height = style.height.match(digitsRegexp).join();
         return Number(top) + Number(height) + Number(bottom);
       },
       getIcon(code) {

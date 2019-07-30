@@ -4,7 +4,8 @@
       <div class="tbl__cell tbl__cell-value tbl__cell-line tbl__cell-container"
            @mouseenter="onRowHoverIn(rowIndex)"
            @mouseleave="onRowHoverOut(rowIndex)"
-           v-for="terms in termRow">
+           :style="{ 'min-width': minWidth(offset) }"
+           v-for="(terms, offset) in termRow">
         <div class="value-wrapper" v-if="terms">
           <template v-for="term in terms">
             <div class="symbol"
@@ -26,7 +27,7 @@
 <script>
   export default {
     props: [
-      'headers', 'rows', 'range', 'active', 'activeRow'
+      'headers', 'rows', 'range', 'active', 'activeRow', 'widths'
     ],
 
     data() {
@@ -99,6 +100,9 @@
         }
         return classList;
       },
+      minWidth(offset) {
+        return this.widths[offset] + 'px';
+      }
     },
   }
 </script>
@@ -112,6 +116,10 @@
 
   .tbl {
     display: table;
+  }
+
+  .tbl--header {
+    min-width: 500px;
   }
 
   .tbl__row {
@@ -151,7 +159,7 @@
     text-align: center;
     padding: 0 $cell-header-space;
     min-width: $cell-header-width;
-    width: $cell-header-width;
+    //width: $cell-header-width;
     font-size: 14px;
   }
 
@@ -161,8 +169,8 @@
   }
 
   .tbl__cell-container {
-    width: $cell-normal-width;
-    min-width: $cell-normal-width;
+    // width: $cell-normal-width;
+    // min-width: $cell-normal-width;
   }
 
   .tbl__cell-spacer {
@@ -183,6 +191,9 @@
     align-items: center;
     justify-content: center;
     cursor: pointer;
+    max-width: 100px;
+    margin-left: auto;
+    margin-right: auto;
 
     &.active {
       background: $color-red;
