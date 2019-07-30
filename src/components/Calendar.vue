@@ -106,10 +106,10 @@
       </ul>
     </div>
 
-    <a href="prikaz.pdf" class="document">
-      <div class="document__icon">
-        <img src="../assets/images/pdf-icon.svg">
-      </div>
+    <a href="http://ivo.garant.ru/#/document/70647158/paragraph/10:0" target="_blank" class="document">
+      <!--<div class="document__icon">-->
+        <!--<img src="../assets/images/pdf-icon.svg">-->
+      <!--</div>-->
       <div class="document__text">
         Приказ МЗ&nbsp;РФ &#8470;&nbsp;125н от&nbsp;21.03.2014&nbsp;об утверждении национального календаря профилактических прививок и&nbsp;календаря профилактических прививок по&nbsp;эпидемическим показаниям
       </div>
