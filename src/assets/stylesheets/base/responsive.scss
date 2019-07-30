@@ -1,0 +1,14 @@
+$breakpoint: 1024px;
+
+@mixin mq($q) {
+    @if $q == desktop {
+        @media screen and (min-width: $breakpoint) {
+            @content;
+        }
+    }
+    @if $q == compact {
+        @media screen and (max-width: $breakpoint - 1px) {
+            @content;
+        }
+    }
+}

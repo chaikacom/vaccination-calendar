@@ -1,19 +1,23 @@
 <template>
   <div class="chart">
     <div class="persons" ref="persons">
-      <div class="persons__item"
-           @click="age = person.id"
-           :class="{ 'persons__item--active': person.id === age }"
-           v-for="person in dataset">
-        <div class="persons__item-icon">
-          <svg class="person" v-if="!IEVersion">
-            <use :xlink:href="require(`../assets/images/persons.svg`) + `#${person.id}`"></use>
-          </svg>
-          <template v-else>
-            <img :src="require(`../assets/images/persons/${person.id}.svg`)">
-          </template>
+      <div title="Назад" class="persons__arrow-prev" @click="changePerson('prev')" :class="arrowClass('prev')"></div>
+      <div title="Вперед" class="persons__arrow-next" @click="changePerson('next')" :class="arrowClass('next')"></div>
+      <div class="persons__inner">
+        <div class="persons__item"
+             @click="age = person.id"
+             :class="{ 'persons__item--active': person.id === age }"
+             v-for="person in dataset">
+          <div class="persons__item-icon">
+            <svg class="person" v-if="!IEVersion">
+              <use :xlink:href="require(`../assets/images/persons.svg`) + `#${person.id}`"></use>
+            </svg>
+            <template v-else>
+              <img :src="require(`../assets/images/persons/${person.id}.svg`)">
+            </template>
+          </div>
+          <div class="persons__item-label" v-html="person.label"></div>
         </div>
-        <div class="persons__item-label" v-html="person.label"></div>
       </div>
     </div>
 
@@ -197,15 +201,8 @@
         directions: Hammer.DIRECTION_HORIZONTAL
       });
       this.hammer.on('swipe', (e) => {
-        const idx = this.dataset.findIndex(item => item.id === this.age);
-        let to;
-        if (e.direction === Hammer.DIRECTION_LEFT) {
-          to = idx + 1
-        } else {
-          to = idx - 1
-        }
-        if (to < 0 || to > this.dataset.length - 1) return;
-        this.age = this.dataset[to].id;
+        const dir = e.direction === Hammer.DIRECTION_LEFT ? 'next' : 'prev';
+        this.changePerson(dir);
       });
 
       const draggable = this.$refs.main;
@@ -226,6 +223,23 @@
     },
 
     methods: {
+      changePerson(dir) {
+        const idx = this.dataset.findIndex(data => data.id === this.age);
+        const prev = idx - 1;
+        const next = idx + 1;
+        let to = idx;
+        if (dir === 'next') {
+          to = next >= this.dataset.length ? idx : next;
+        } else {
+          to = prev < 0 ? idx : prev;
+        }
+        this.age = this.dataset[to].id;
+      },
+      arrowClass(dir) {
+        const currentIndex = this.dataset.findIndex(data => data.id === this.age);
+        if (dir === 'next') return currentIndex >= (this.dataset.length - 1) ? 'disabled' : '';
+        if (dir === 'prev') return currentIndex <= 0 ? 'disabled' : '';
+      },
       calcHeights() {
         this.$nextTick(() => {
           const table = this.$refs.table;
@@ -330,9 +344,43 @@
   }
 
   .persons {
+    position: relative;
+  }
+
+  [class*="persons__arrow-"] {
+    position: absolute;
+    top: 50%;
+    transform: translateY(-50%);
+    width: 1em;
+    height: 1em;
+    font-size: 25px;
+    background-position: 50% 50%;
+    background-repeat: no-repeat;
+    background-image: url("data:image/svg+xml,%3Csvg width='25' height='25' viewBox='0 0 25 25' fill='none' xmlns='http://www.w3.org/2000/svg'%3E%3Cpath d='M11.6364 23.0068L12.3145 23.6848L23.6564 12.3428L12.3133 0.999676L11.6353 1.67763L22.3005 12.3428L11.6364 23.0068Z' fill='%235C708E'/%3E%3C/svg%3E%0A");
+    cursor: pointer;
+
+    &.disabled {
+      opacity: 0.4;
+      pointer-events: none;
+    }
+  }
+
+  .persons__arrow-prev {
+    left: 0;
+    transform: translateY(-50%) scale(-1, 1);
+  }
+
+  .persons__arrow-next {
+    right: 0;
+  }
+
+  .persons__inner {
     display: flex;
     justify-content: space-around;
     margin: 50px 0;
+    @include mq(compact) {
+      justify-content: center;
+    }
   }
 
   .persons__item {
@@ -343,6 +391,14 @@
 
     &--active {
       color: $color-red;
+    }
+
+    @include mq(compact) {
+      display: none;
+
+      &--active {
+        display: block;
+      }
     }
   }
 
@@ -359,7 +415,6 @@
     text-transform: uppercase;
     font-weight: bold;
     font-size: 14px;
-    line-height: 16px;
     letter-spacing: 0.15em;
     line-height: 1.5em;
   }
