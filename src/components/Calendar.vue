@@ -142,7 +142,9 @@
         return item;
       }) })
     });
-    if (data.timeline) data.timeline.forEach(item => headers.push(parser.parseItem(item)));
+    if (data.timeline) {
+      data.timeline.forEach(item => headers.push(parser.parseItem(item)));
+    }
     const range = parser.parseArray(data.range);
     rows.forEach(row => row.items.forEach(term => headers.push(term)));
     headers = parser.getAllValues(headers, range);

@@ -4,15 +4,19 @@
       <div class="tbl__cell tbl__cell-value tbl__cell-line tbl__cell-container"
            @mouseenter="onRowHoverIn(rowIndex)"
            @mouseleave="onRowHoverOut(rowIndex)"
-           v-for="term in termRow">
-        <template v-if="term">
-          <div class="symbol"
-               v-popover="{ event: 'hover', name: term.popover }"
-               :class="term.className"></div>
-          <popover event="hover"
-                   v-if="term.popover"
-                   v-html="term.title"
-                   :name="term.popover"></popover>
+           v-for="terms in termRow">
+        <template v-if="terms">
+          <template v-for="term in terms">
+            <div class="symbol"
+                 v-popover="{ event: 'hover', name: term.popover }"
+                 :class="term.className">
+            </div>
+            <popover event="hover"
+                     v-if="term.popover"
+                     v-html="term.title"
+                     :name="term.popover">
+            </popover>
+          </template>
         </template>
       </div>
     </div>
@@ -35,35 +39,39 @@
       terms() {
         return this.rows.map((row, rowIndex) => {
           return this.headers.map((header, headerIndex) => {
-            const term = row.items.find(term => term.contains(header.value));
-            if (!term) return null;
+            const terms = this.getTerms(row, header); // row.items.find(term => term.contains(header.value));
 
-            const hasHover = this.activeRow !== null;
-            const hasActive = this.active !== null;
-            let activityClass = '';
+            if (!terms.length) return null;
 
-            if (hasActive || hasHover) {
-              const isActive = hasActive && term.contains(this.active.value);
-              const isHovered = hasHover && this.activeRow === rowIndex;
-              activityClass = !isActive && !isHovered ? ' inactive ' : '';
-            }
-
-            const mainClass = this.symbolClass(term, header);
-            const colorClass = term.epid ? 'light' : 'dark';
-
-            return {
-              popover: term.title ? `popover_${rowIndex}${headerIndex}` : null,
-              title: term.title,
-              className: `${mainClass} ${colorClass} ${activityClass}`,
-            }
+            return terms.map((term, idx) => this.processTerm(term, header, rowIndex, headerIndex, idx));
           })
         })
       },
     },
 
     methods: {
-      getTerm(row, header) {
-        this.term = row.items.find(item => item.contains(header.value));
+      processTerm(term, header, rowIndex, headerIndex, idx) {
+        const hasHover = this.activeRow !== null;
+        const hasActive = this.active !== null;
+        let activityClass = '';
+
+        if (hasActive || hasHover) {
+          const isActive = hasActive && term.contains(this.active.value);
+          const isHovered = hasHover && this.activeRow === rowIndex;
+          activityClass = !isActive && !isHovered ? ' inactive ' : '';
+        }
+
+        const mainClass = this.symbolClass(term, header);
+        const colorClass = term.epid ? 'light' : 'dark';
+
+        return {
+          popover: term.title ? `popover_${rowIndex}${headerIndex}_${idx}` : null,
+          title: term.title,
+          className: `${mainClass} ${colorClass} ${activityClass}`,
+        }
+      },
+      getTerms(row, header) {
+        return row.items.filter(term => term.contains(header.value));
       },
 
       onRowHoverIn(index) {
