@@ -53,8 +53,8 @@
               <div class="tbl__cell tbl__cell-header" v-for="header in headers">
                 <div class="tbl__header-box"
                      :class="{ 'active': active && active.value === header.value }"
+                     v-html="header.label"
                      @click="select(header)">
-                  {{ header.label }}
                 </div>
               </div>
             </div>

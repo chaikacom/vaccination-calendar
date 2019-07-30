@@ -1,4 +1,5 @@
 import Term from './Term';
+import { plural } from "../utils";
 
 export function parseNumber(string) {
   return string.split('/').map((val) => {
@@ -14,9 +15,9 @@ export function parseNumber(string) {
 }
 
 export function parseLabel(date) {
-  const years = date.years ? date.years + ' лет' : null;
-  const months = date.months ? date.months + ' мес.' : null;
-  let days = date.days ? (Array.isArray(date.days) ? date.days.join('-') : date.days) + ' дн.' : null;
+  const years = date.years ? `${date.years} <br/> ${plural(date.years, 'год', 'года', 'лет')}` : null;
+  const months = date.months ? `${date.months} <br/> ${plural(date.months, 'месяц', 'месяца', 'месяцев')}` : null;
+  let days = date.days ? (Array.isArray(date.days) ? date.days.join('-') : date.days) + ' <br/> ' + plural(date.days, 'день', 'дня', 'дней') : null;
   return [years, months, days].filter(item => !!item).join(' ');
 }
 
