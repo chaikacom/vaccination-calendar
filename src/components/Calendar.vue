@@ -99,10 +99,10 @@
     </ul>
 
     <div class="notes" v-if="data.notes">
-      <h3 class="notes__title">
+      <h3 class="notes__title" @click="showNotes = !showNotes">
         Примечания
       </h3>
-      <ul class="notes-list">
+      <ul class="notes-list" v-if="showNotes">
         <li v-for="note in data.notes">
           <span class="notes-list__note sup">{{ note.number }}</span>
           <span class="notes-list__text" v-html="note.text"></span>
@@ -169,6 +169,7 @@
         icons,
         legend,
         activeRow: null,
+        showNotes: false,
       }
     },
 
@@ -441,6 +442,10 @@
     font-size: 14px;
     text-transform: uppercase;
     font-weight: bold;
+    cursor: pointer;
+    &:hover {
+      color: $color-arrow-light;
+    }
   }
 
   .notes-list {
