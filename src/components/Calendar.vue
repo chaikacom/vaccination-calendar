@@ -345,6 +345,11 @@
 
   .persons {
     position: relative;
+    @include mq(compact) {
+      max-width: 320px;
+      margin-left: auto;
+      margin-right: auto;
+    }
   }
 
   [class*="persons__arrow-"] {
@@ -358,6 +363,10 @@
     background-repeat: no-repeat;
     background-image: url("data:image/svg+xml,%3Csvg width='25' height='25' viewBox='0 0 25 25' fill='none' xmlns='http://www.w3.org/2000/svg'%3E%3Cpath d='M11.6364 23.0068L12.3145 23.6848L23.6564 12.3428L12.3133 0.999676L11.6353 1.67763L22.3005 12.3428L11.6364 23.0068Z' fill='%235C708E'/%3E%3C/svg%3E%0A");
     cursor: pointer;
+
+    @include mq(desktop) {
+      display: none;
+    }
 
     &.disabled {
       opacity: 0.4;
