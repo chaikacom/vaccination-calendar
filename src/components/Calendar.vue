@@ -13,7 +13,7 @@
             <img :src="require(`../assets/images/persons/${person.id}.svg`)">
           </template>
         </div>
-        <div class="persons__item-label">{{ person.label }}</div>
+        <div class="persons__item-label" v-html="person.label"></div>
       </div>
     </div>
 
@@ -348,7 +348,7 @@
 
   .persons__item-icon {
     text-align: center;
-    margin-bottom: 20px;
+    margin-bottom: 15px;
     * {
       font-size: 100px;
       vertical-align: top;
@@ -360,6 +360,8 @@
     font-weight: bold;
     font-size: 14px;
     line-height: 16px;
+    letter-spacing: 0.15em;
+    line-height: 1.5em;
   }
 
   .draggable {
