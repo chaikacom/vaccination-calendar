@@ -5,10 +5,10 @@
            @mouseenter="onRowHoverIn(rowIndex)"
            @mouseleave="onRowHoverOut(rowIndex)"
            v-for="terms in termRow">
-        <template v-if="terms">
+        <div class="value-wrapper" v-if="terms">
           <template v-for="term in terms">
             <div class="symbol"
-                 v-popover="{ event: 'hover', name: term.popover }"
+                 v-popover="{ event: 'click', name: term.popover }"
                  :class="term.className">
             </div>
             <popover event="hover"
@@ -17,7 +17,7 @@
                      :name="term.popover">
             </popover>
           </template>
-        </template>
+        </div>
       </div>
     </div>
   </div>
@@ -90,9 +90,9 @@
         if (term.hasDuration()) {
           const ext = term.isExt(header.value);
           if (ext) {
-            classList += ext === 'start' ? 'from' : 'to';
+            classList += ext === 'start' ? 'from iline' : 'to arrow';
           } else {
-            classList += 'line'
+            classList += 'line iline'
           };
         } else {
           classList = 'dot';
@@ -223,5 +223,11 @@
     .dot {
       font-size: 20px;
     }
+  }
+
+  .value-wrapper {
+    display: flex;
+    align-items: center;
+    justify-content: center;
   }
 </style>

@@ -7,50 +7,21 @@
     border-radius: 50%;
     background: currentColor;
 
-    &--light {
-        color: $color-arrow-light;
-    }
-
-    &.inactive {
-        color: $color-border;
-    }
-}
-
-.from,
-.to,
-.line {
-    display: block;
-    position: relative;
-    height: 5px;
-    background: currentColor;
-
-    &.inactive {
-        color: $color-border;
-    }
-
     &.light {
         color: $color-arrow-light;
     }
 
-    &.dark {
-        color: $color-arrow-dark
+    &.inactive {
+        color: $color-border;
     }
 }
 
-.from {
-    margin-left: 50%;
-    &--prev {
-        margin-left: 0;
-    }
-}
 
-.to {
+.arrow {
     font-size: 10px;
-    margin-right: calc(50% + 1em);
-
-    &--next {
-        margin-right: 1em;
-    }
+    position: relative;
+    height: 5px;
+    background: currentColor;
 
     &:before {
         content: '';
@@ -62,4 +33,88 @@
         border: 1em solid;
         border-color: transparent transparent transparent currentColor;
     }
+
+    &.light {
+        color: $color-arrow-light;
+    }
+
+    &.dark {
+        color: $color-arrow-dark;
+    }
+
+    &.inactive {
+        color: $color-border;
+    }
+}
+
+.iline {
+    height: 5px;
+    background: currentColor;
+
+    &.light {
+        color: $color-arrow-light;
+    }
+
+    &.dark {
+        color: $color-arrow-dark;
+    }
+
+    &.inactive {
+        color: $color-border;
+    }
+}
+
+.from,
+.to,
+.line {
+    //display: block;
+    //position: relative;
+    //height: 5px;
+    //background: currentColor;
+    //
+    //&.light {
+    //    color: $color-arrow-light;
+    //}
+    //
+    //&.dark {
+    //    color: $color-arrow-dark
+    //}
+    //
+    //&.inactive {
+    //    color: $color-border;
+    //}
+}
+
+.line {
+    flex: 1 1 100%;
+}
+
+.from {
+    flex: 0 0 50%;
+    margin: 0 0 0 auto;
+
+    &--prev {
+        margin-left: 0;
+    }
+}
+
+.to {
+    font-size: 10px;
+    flex: 0 0 50%;
+    margin: 0 auto 0 -1em;
+
+    &--next {
+        margin-right: 1em;
+    }
+
+    //&:before {
+    //    content: '';
+    //    display: block;
+    //    position: absolute;
+    //    top: 50%;
+    //    transform: translateY(-50%);
+    //    left: 100%;
+    //    border: 1em solid;
+    //    border-color: transparent transparent transparent currentColor;
+    //}
 }
