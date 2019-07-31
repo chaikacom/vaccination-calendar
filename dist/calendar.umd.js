@@ -1686,54 +1686,6 @@ module.exports = {};
 
 /***/ }),
 
-/***/ "4917":
-/***/ (function(module, exports, __webpack_require__) {
-
-"use strict";
-
-
-var anObject = __webpack_require__("cb7c");
-var toLength = __webpack_require__("9def");
-var advanceStringIndex = __webpack_require__("0390");
-var regExpExec = __webpack_require__("5f1b");
-
-// @@match logic
-__webpack_require__("214f")('match', 1, function (defined, MATCH, $match, maybeCallNative) {
-  return [
-    // `String.prototype.match` method
-    // https://tc39.github.io/ecma262/#sec-string.prototype.match
-    function match(regexp) {
-      var O = defined(this);
-      var fn = regexp == undefined ? undefined : regexp[MATCH];
-      return fn !== undefined ? fn.call(regexp, O) : new RegExp(regexp)[MATCH](String(O));
-    },
-    // `RegExp.prototype[@@match]` method
-    // https://tc39.github.io/ecma262/#sec-regexp.prototype-@@match
-    function (regexp) {
-      var res = maybeCallNative($match, regexp, this);
-      if (res.done) return res.value;
-      var rx = anObject(regexp);
-      var S = String(this);
-      if (!rx.global) return regExpExec(rx, S);
-      var fullUnicode = rx.unicode;
-      rx.lastIndex = 0;
-      var A = [];
-      var n = 0;
-      var result;
-      while ((result = regExpExec(rx, S)) !== null) {
-        var matchStr = String(result[0]);
-        A[n] = matchStr;
-        if (matchStr === '') rx.lastIndex = advanceStringIndex(S, toLength(rx.lastIndex), fullUnicode);
-        n++;
-      }
-      return n === 0 ? null : A;
-    }
-  ];
-});
-
-
-/***/ }),
-
 /***/ "499e":
 /***/ (function(module, __webpack_exports__, __webpack_require__) {
 
@@ -16905,18 +16857,12 @@ var es6_object_assign = __webpack_require__("f751");
 // EXTERNAL MODULE: ./node_modules/vue-tippy/dist/vue-tippy.esm.js
 var vue_tippy_esm = __webpack_require__("6018");
 
-// CONCATENATED MODULE: ./node_modules/cache-loader/dist/cjs.js?{"cacheDirectory":"node_modules/.cache/vue-loader","cacheIdentifier":"418f6f62-vue-loader-template"}!./node_modules/vue-loader/lib/loaders/templateLoader.js??vue-loader-options!./node_modules/cache-loader/dist/cjs.js??ref--0-0!./node_modules/vue-loader/lib??vue-loader-options!./src/components/Calendar.vue?vue&type=template&id=89903886&
+// CONCATENATED MODULE: ./node_modules/cache-loader/dist/cjs.js?{"cacheDirectory":"node_modules/.cache/vue-loader","cacheIdentifier":"418f6f62-vue-loader-template"}!./node_modules/vue-loader/lib/loaders/templateLoader.js??vue-loader-options!./node_modules/cache-loader/dist/cjs.js??ref--0-0!./node_modules/vue-loader/lib??vue-loader-options!./src/components/Calendar.vue?vue&type=template&id=75a2716b&
 var render = function () {var _vm=this;var _h=_vm.$createElement;var _c=_vm._self._c||_h;return _c('div',{staticClass:"chart"},[_c('div',{ref:"persons",staticClass:"persons"},[_c('div',{staticClass:"persons__arrow-prev",class:_vm.arrowClass('prev'),attrs:{"title":"Назад"},on:{"click":function($event){return _vm.changePerson('prev')}}}),_c('div',{staticClass:"persons__arrow-next",class:_vm.arrowClass('next'),attrs:{"title":"Вперед"},on:{"click":function($event){return _vm.changePerson('next')}}}),_c('div',{staticClass:"persons__inner"},_vm._l((_vm.dataset),function(person){return _c('div',{staticClass:"persons__item",class:{ 'persons__item--active': person.id === _vm.age },on:{"click":function($event){_vm.age = person.id}}},[_c('div',{staticClass:"persons__item-icon"},[(!_vm.IEVersion)?_c('svg',{staticClass:"person"},[_c('use',{attrs:{"xlink:href":__webpack_require__("54af") + "#" + (person.id)}})]):[_c('img',{attrs:{"src":__webpack_require__("e4c3")("./" + (person.id) + ".svg")}})]],2),_c('div',{staticClass:"persons__item-label",domProps:{"innerHTML":_vm._s(person.label)}})])}),0)]),_c('div',{staticClass:"grid"},[_c('div',{staticClass:"grid__aside"},[_c('div',{ref:"tableHeight",staticClass:"tbl"},_vm._l((_vm.items),function(item,idx){return _c('div',{staticClass:"tbl__row"},[_c('div',{staticClass:"tbl__cell tbl__cell-icons"},[(item.icons)?[_c('div',{staticClass:"icons-set icons-set--sm"},_vm._l((item.icons.split(' ')),function(icon){return _c('img',{directives:[{name:"tippy",rawName:"v-tippy",value:({ trigger: 'click', maxWidth: 300 }),expression:"{ trigger: 'click', maxWidth: 300 }"}],staticClass:"tbl__cell-icon",attrs:{"src":__webpack_require__("f57b")("./" + (_vm.getIcon(icon).image) + ".svg"),"content":_vm.getIcon(icon).name}})}),0)]:_vm._e()],2),_c('div',{staticClass:"tbl__cell tbl__cell-name",class:{ 'muted': _vm.activeRow !== null && _vm.activeRow !== idx },on:{"mouseleave":function($event){_vm.activeRow = null},"mouseenter":function($event){_vm.activeRow = idx}}},[_c('div',{staticClass:"tbl__cell-name-inner"},[_c('span',{directives:[{name:"tippy",rawName:"v-tippy",value:({ maxWidth: 300, trigger: 'click' }),expression:"{ maxWidth: 300, trigger: 'click' }"}],staticClass:"tbl__cell-name-text",attrs:{"content":item.hint.html}},[_vm._v("\n                "+_vm._s(item.name)+"\n              ")]),(item.note)?_c('span',{staticClass:"sup"},[_vm._v(_vm._s(item.note))]):_vm._e()])])])}),0)]),_c('div',{ref:"main",staticClass:"grid__main draggable"},[_c('div',{staticClass:"grid__main-top"},[_c('div',{ref:"headers",staticClass:"tbl tbl--header"},[_c('div',{staticClass:"tbl__row"},_vm._l((_vm.headers),function(header){return _c('div',{staticClass:"tbl__cell tbl__cell-header"},[_c('div',{staticClass:"tbl__header-box",class:{ 'active': _vm.active && _vm.active.value === header.value },domProps:{"innerHTML":_vm._s(header.label)},on:{"click":function($event){return _vm.select(header)}}})])}),0),_c('div',{staticClass:"tbl__row"},_vm._l((_vm.headers),function(header){return _c('div',{staticClass:"tbl__cell tbl__cell-line tbl__cell-spacer"})}),0)])]),_c('div',{staticClass:"grid__main-center"},[_c('tbl',{ref:"table",attrs:{"headers":_vm.headers,"widths":_vm.widths,"rows":_vm.items,"active-row":_vm.activeRow,"range":_vm.range,"active":_vm.active},on:{"rowchange":function($event){_vm.activeRow = $event}}})],1),_c('div',{staticClass:"grid__main-bottom"})])]),_c('div',{staticClass:"icons-description icons-set"},[_vm._l((_vm.icons),function(icon){return [_c('img',{directives:[{name:"tippy",rawName:"v-tippy",value:({ trigger: 'click', maxWidth: 300 }),expression:"{ trigger: 'click', maxWidth: 300 }"}],staticClass:"icons-description__item icons-set",attrs:{"src":__webpack_require__("f57b")("./" + (icon.image) + ".svg"),"content":"Ipsum","content":icon.name}})]})],2),_c('ul',{staticClass:"legend"},_vm._l((_vm.legend),function(line){return _c('li',{staticClass:"legend__item"},[_c('div',{staticClass:"legend__item-symbol"},[_c('div',{staticClass:"symbol",class:line.symbol})]),_c('div',{staticClass:"legend__item-text",domProps:{"innerHTML":_vm._s(line.text)}})])}),0),(_vm.data.notes)?_c('div',{staticClass:"notes",class:{ 'is-open': _vm.showNotes }},[_c('h3',{staticClass:"notes__title",on:{"click":function($event){_vm.showNotes = !_vm.showNotes}}},[_c('span',[_vm._v("Примечания")]),_c('img',{staticClass:"notes__title-icon",attrs:{"src":__webpack_require__("1472")}})]),(_vm.showNotes)?_c('ul',{staticClass:"notes-list"},_vm._l((_vm.data.notes),function(note){return _c('li',[_c('span',{staticClass:"notes-list__note sup"},[_vm._v(_vm._s(note.number))]),_c('span',{staticClass:"notes-list__text",domProps:{"innerHTML":_vm._s(note.text)}})])}),0):_vm._e()]):_vm._e(),_vm._m(0)])}
 var staticRenderFns = [function () {var _vm=this;var _h=_vm.$createElement;var _c=_vm._self._c||_h;return _c('a',{staticClass:"document",attrs:{"href":"http://ivo.garant.ru/#/document/70647158/paragraph/10:0","target":"_blank"}},[_c('div',{staticClass:"document__text"},[_vm._v("\n      Приказ МЗ РФ № 125н от 21.03.2014 об утверждении национального календаря профилактических прививок и календаря профилактических прививок по эпидемическим показаниям\n    ")])])}]
 
 
-// CONCATENATED MODULE: ./src/components/Calendar.vue?vue&type=template&id=89903886&
-
-// EXTERNAL MODULE: ./node_modules/core-js/modules/es6.number.constructor.js
-var es6_number_constructor = __webpack_require__("c5f6");
-
-// EXTERNAL MODULE: ./node_modules/core-js/modules/es6.regexp.match.js
-var es6_regexp_match = __webpack_require__("4917");
+// CONCATENATED MODULE: ./src/components/Calendar.vue?vue&type=template&id=75a2716b&
 
 // EXTERNAL MODULE: ./node_modules/core-js/modules/es6.array.find-index.js
 var es6_array_find_index = __webpack_require__("20d6");
@@ -16962,6 +16908,9 @@ function typeof_typeof(obj) {
 }
 // EXTERNAL MODULE: ./node_modules/core-js/modules/es6.array.sort.js
 var es6_array_sort = __webpack_require__("55dd");
+
+// EXTERNAL MODULE: ./node_modules/core-js/modules/es6.number.constructor.js
+var es6_number_constructor = __webpack_require__("c5f6");
 
 // EXTERNAL MODULE: ./node_modules/core-js/modules/es6.regexp.split.js
 var es6_regexp_split = __webpack_require__("28a5");
@@ -17524,9 +17473,6 @@ var scrollbooster_min_default = /*#__PURE__*/__webpack_require__.n(scrollbooster
 
 
 
-
-
-
 //
 //
 //
@@ -17809,11 +17755,7 @@ function prepareData(data) {
 
       this.$nextTick(function () {
         _this5.widths = [].map.call(_this5.$refs.headers.querySelectorAll('.tbl__cell-header'), function (el) {
-          var style = getComputedStyle(el);
-          var left = style.paddingLeft.match(digitsRegexp).join();
-          var right = style.paddingRight.match(digitsRegexp).join();
-          var width = style.width.match(digitsRegexp).join();
-          return Number(left) + Number(right) + Number(width);
+          return el.offsetWidth;
         });
       });
     },
@@ -17839,11 +17781,7 @@ function prepareData(data) {
       this.active = this.active && this.active.value === item.value ? null : item;
     },
     calcHeight: function calcHeight(element) {
-      var style = getComputedStyle(element);
-      var top = style.paddingTop.match(digitsRegexp).join();
-      var bottom = style.paddingBottom.match(digitsRegexp).join();
-      var height = style.height.match(digitsRegexp).join();
-      return Number(top) + Number(height) + Number(bottom);
+      return element.offsetHeight;
     },
     getIcon: function getIcon(code) {
       return this.icons.find(function (icon) {

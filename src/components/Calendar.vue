@@ -252,13 +252,7 @@
       },
       calcWidths() {
         this.$nextTick(() => {
-          this.widths = [].map.call(this.$refs.headers.querySelectorAll('.tbl__cell-header'), (el) => {
-            const style = getComputedStyle(el);
-            const left = style.paddingLeft.match(digitsRegexp).join();
-            const right = style.paddingRight.match(digitsRegexp).join();
-            const width = style.width.match(digitsRegexp).join();
-            return Number(left) + Number(right) + Number(width);
-          });
+          this.widths = [].map.call(this.$refs.headers.querySelectorAll('.tbl__cell-header'), (el) => el.offsetWidth);
         });
       },
       calcHeights() {
@@ -279,11 +273,7 @@
         this.active = this.active && this.active.value === item.value ? null : item;
       },
       calcHeight(element) {
-        const style = getComputedStyle(element);
-        const top = style.paddingTop.match(digitsRegexp).join();
-        const bottom = style.paddingBottom.match(digitsRegexp).join();
-        const height = style.height.match(digitsRegexp).join();
-        return Number(top) + Number(height) + Number(bottom);
+        return element.offsetHeight;
       },
       getIcon(code) {
         return this.icons.find(icon => icon.code === code);
