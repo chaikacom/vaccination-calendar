@@ -9,14 +9,10 @@
         <div class="value-wrapper" v-if="terms">
           <template v-for="term in terms">
             <div class="symbol"
-                 v-popover="{ event: 'click', name: term.popover }"
+                 :content="term.title"
+                 v-tippy="{ trigger: 'click', maxWidth: 300 }"
                  :class="term.className">
             </div>
-            <popover event="hover"
-                     v-if="term.popover"
-                     v-html="term.title"
-                     :name="term.popover">
-            </popover>
           </template>
         </div>
       </div>
@@ -66,7 +62,6 @@
         const colorClass = term.epid ? 'light' : 'dark';
 
         return {
-          popover: term.title ? `popover_${rowIndex}${headerIndex}_${idx}` : null,
           title: term.title,
           className: `${mainClass} ${colorClass} ${activityClass}`,
         }

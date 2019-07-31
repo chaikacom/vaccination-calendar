@@ -1,14 +1,22 @@
-import Popover from 'vue-js-popover/src';
+import VueTippy from 'vue-tippy';
 import Calendar from '../components/Calendar.vue';
 
 const defaultOptions = {
   componentName: 'vaccination-calendar',
 };
 
-export default {
+const VaccinationCalendarPlugin = {
   install(Vue, options = {}) {
     const opts = Object.assign({}, defaultOptions, options);
-    Vue.use(Popover, { tooltip: true });
     Vue.component(opts.componentName, Calendar);
+    Vue.use(VueTippy);
   },
-};
+}
+
+// Automatic installation if Vue has been added to the global scope.
+if (typeof window !== 'undefined' && window.Vue) {
+  window.Vue.use(VaccinationCalendarPlugin);
+}
+
+export default VaccinationCalendarPlugin;
+export { VaccinationCalendarPlugin };

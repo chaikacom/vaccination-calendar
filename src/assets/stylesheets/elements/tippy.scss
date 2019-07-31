@@ -1,0 +1,18 @@
+@import "../base/index";
+
+.tippy-backdrop {
+    background: #fff;
+}
+
+.tippy-tooltip {
+    padding: 15px;
+    color: inherit;
+    box-shadow: 0 0 10px rgba(#000, 0.1);
+}
+
+.tippy-content {
+    text-align: left;
+    color: $color-text;
+    font-size: 14px;
+    line-height: 1.5em;
+}

@@ -15,7 +15,7 @@
     "scrollbooster": "^1.1.0",
     "simplebar": "^4.1.0",
     "vue": "^2.6.10",
-    "vue-js-popover": "^1.1.8"
+    "vue-tippy": "^4.0.0-beta.4"
   },
   "devDependencies": {
     "@vue/cli-plugin-babel": "^3.9.0",

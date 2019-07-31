@@ -29,8 +29,9 @@
               <template v-if="item.icons">
                 <div class="icons-set icons-set--sm">
                   <img :src="require(`../assets/images/${getIcon(icon).image}.svg`)"
-                       v-popover.top="{ name: 'icon_' + getIcon(icon).code }"
                        class="tbl__cell-icon"
+                       :content="getIcon(icon).name"
+                       v-tippy="{ trigger: 'click', maxWidth: 300 }"
                        v-for="icon in item.icons.split(' ')">
                 </div>
               </template>
@@ -40,12 +41,13 @@
                  @mouseleave="activeRow = null"
                  @mouseenter="activeRow = idx">
               <div class="tbl__cell-name-inner">
-                <span class="tbl__cell-name-text" v-popover.top="{ event: 'hover', name: `name_${idx}` }">{{ item.name }}</span>
+                <span class="tbl__cell-name-text"
+                      :content="item.hint.html"
+                      v-tippy="{ maxWidth: 300, trigger: 'click' }">
+                  {{ item.name }}
+                </span>
                 <span class="sup" v-if="item.note">{{ item.note }}</span>
               </div>
-              <popover v-if="item.hint && item.hint.html"
-                       :name="`name_${idx}`"
-                       v-html="item.hint.html"></popover>
             </div>
           </div>
         </div>
@@ -84,9 +86,10 @@
     <div class="icons-description icons-set">
       <template v-for="icon in icons">
         <img :src="require(`../assets/images/${icon.image}.svg`)"
-             v-popover.top="{ name: 'icon_' + icon.code }"
+             content="Ipsum"
+             :content="icon.name"
+             v-tippy="{ trigger: 'click', maxWidth: 300 }"
              class="icons-description__item icons-set">
-        <popover :name="'icon_' + icon.code">{{ icon.name }}</popover>
       </template>
     </div>
 
@@ -120,13 +123,12 @@
       </div>
     </a>
 
-    <tooltip></tooltip>
-
   </div>
 </template>
 
 <script>
   import '../assets/stylesheets/index.scss';
+  import '../assets/stylesheets/elements/tippy.scss';
   import * as parser from '../chart/parser';
   import Tbl from './Tbl.vue';
   import dataJSON from '../data/dataset';
