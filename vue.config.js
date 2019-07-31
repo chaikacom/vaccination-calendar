@@ -1,4 +1,5 @@
 const isLib = process.argv.indexOf('lib') > -1;
+const mode = process.env.NODE_ENV;
 
 module.exports = {
   outputDir: 'docs',
@@ -8,6 +9,9 @@ module.exports = {
     output: {
       libraryExport: 'default',
     },
+  },
+  css: {
+    extract: (mode === 'development') || isLib ? false : true,
   },
   chainWebpack: (config) => {
     if (isLib) {
