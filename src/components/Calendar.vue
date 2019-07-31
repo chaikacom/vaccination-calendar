@@ -43,8 +43,8 @@
               <div class="tbl__cell-name-inner">
                 <span class="tbl__cell-name-text"
                       :content="item.hint.html"
+                      v-html="item.name"
                       v-tippy="{ maxWidth: 300, trigger: 'click' }">
-                  {{ item.name }}
                 </span>
                 <span class="sup" v-if="item.note">{{ item.note }}</span>
               </div>
@@ -298,6 +298,10 @@
 
   .chart {
     color: $color-text;
+  }
+
+  .chart * {
+    box-sizing: border-box;
   }
 
   .terms {

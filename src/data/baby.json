@@ -77,7 +77,7 @@
       }
     },
     {
-      "name": "Гемофильная инфекция, тип b",
+      "name": "Гемофильная инфекция, тип&nbsp;b",
       "note": 3,
       "items": [{ "items": "0/3", "title": "INSTR_VAC" }, { "items": "0/4.5", "title": "INSTR_VAC" }, { "items": "0/6", "title": "INSTR_VAC" }],
       "hint": {

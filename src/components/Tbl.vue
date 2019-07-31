@@ -107,7 +107,7 @@
 
   $cell-normal-width: 108px;
   $cell-header-space: 9px;
-  $cell-header-width: $cell-normal-width - $cell-header-space * 2;
+  $cell-header-width: $cell-normal-width;
 
   .tbl {
     display: table;
@@ -134,6 +134,7 @@
     padding: 10px 40px 10px 0;
     width: 170px;
     min-width: 170px;
+    max-width: 170px;
     vertical-align: middle;
   }
 
@@ -148,14 +149,24 @@
     *.muted > & {
       color: $color-border;
     }
+
+    .sup {
+      position: absolute;
+    }
   }
 
   .tbl__cell-header {
     text-align: center;
     padding: 0 $cell-header-space;
     min-width: $cell-header-width;
-    //width: $cell-header-width;
+    width: $cell-header-width;
     font-size: 14px;
+    &:first-child {
+      padding-left: 0;
+    }
+    &:last-child {
+      padding-right: 0;
+    }
   }
 
   .tbl__cell-value {
