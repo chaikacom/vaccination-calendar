@@ -458,6 +458,7 @@
     cursor: pointer;
     display: inline-flex;
     align-items: center;
+    margin: 20px 0;
     &:hover {
       color: $color-arrow-light;
     }
