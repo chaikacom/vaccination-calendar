@@ -102,9 +102,10 @@
       </li>
     </ul>
 
-    <div class="notes" v-if="data.notes">
+    <div class="notes" :class="{ 'is-open': showNotes }" v-if="data.notes">
       <h3 class="notes__title" @click="showNotes = !showNotes">
-        Примечания
+        <span>Примечания</span>
+        <img src="../assets/images/angle.svg" class="notes__title-icon">
       </h3>
       <ul class="notes-list" v-if="showNotes">
         <li v-for="note in data.notes">
@@ -461,8 +462,18 @@
     text-transform: uppercase;
     font-weight: bold;
     cursor: pointer;
+    display: inline-flex;
+    align-items: center;
     &:hover {
       color: $color-arrow-light;
+    }
+  }
+
+  .notes__title-icon {
+    margin-left: 5px;
+
+    .notes.is-open & {
+      transform: scale(1, -1);
     }
   }
 
