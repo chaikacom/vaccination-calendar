@@ -124,6 +124,13 @@
       </div>
     </a>
 
+    <div class="copyright">
+      <span class="copyright__label">Источник:</span>
+      <a href="https://www.privivka.ru/?utm_source=link&utm_medium=klinika&utm_campaign=chaika"
+         class="copyright__link"
+         target="_blank">privivka.ru</a>
+    </div>
+
   </div>
 </template>
 
@@ -519,5 +526,13 @@
 
   .document__text {
     flex: 1 1 auto;
+  }
+
+  .copyright {
+    margin: 50px 0;
+  }
+  .copyright__link {
+    color: $color-arrow-light;
+    margin-left: 0.5em;
   }
 </style>
