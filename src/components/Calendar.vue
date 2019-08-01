@@ -115,7 +115,7 @@
       </ul>
     </div>
 
-    <a href="http://ivo.garant.ru/#/document/70647158/paragraph/10:0" target="_blank" class="document">
+    <a :href="documentLink" target="_blank" class="document">
       <!--<div class="document__icon">-->
         <!--<img src="../assets/images/pdf-icon.svg">-->
       <!--</div>-->
@@ -148,6 +148,7 @@
 
   const dataset = dataJSON.map(prepareData);
   const digitsRegexp = /\d+(.\d+)?/g;
+  const documentLink = 'http://ivo.garant.ru/#/document/70647158/paragraph/1:0';
 
   function prepareData(data) {
     let headers = [];
@@ -183,6 +184,7 @@
         activeRow: null,
         showNotes: false,
         widths: [],
+        documentLink
       }
     },
 
