@@ -165,6 +165,14 @@
     const range = parser.parseArray(data.range);
     rows.forEach(row => row.items.forEach(term => headers.push(term)));
     headers = parser.getAllValues(headers, range);
+
+    if (data.headerLabels) {
+      headers.forEach((header) => {
+        const found = data.headerLabels.find(item => item.value === header.original);
+        header.label = found ? found.label : header.label;
+      })
+    }
+
     return Object.assign({}, data, { range, items: rows, headers });
   }
 
