@@ -83,13 +83,21 @@
 
         if (!term) return classList;
 
+        const isFirst = header.value <= this.headers[0].value;
+        const isLast = header.value >= this.headers[this.headers.length - 1].value;
+
         if (term.hasDuration()) {
           const ext = term.isExt(header.value);
           if (ext) {
             classList += ext === 'start' ? 'from iline' : 'to arrow';
           } else {
-            classList += 'line iline'
+            classList += ' line iline ';
           };
+
+          if (isFirst || isLast) {
+            classList += isFirst && (term.from.value < this.range.from.value) ? ' prev iline ' : '';
+            classList += isLast && (term.to.value > this.range.to.value) ? ' next arrow ' : '';
+          }
         } else {
           classList = 'dot';
         }
@@ -249,5 +257,6 @@
     display: flex;
     align-items: center;
     justify-content: center;
+    cursor: default;
   }
 </style>

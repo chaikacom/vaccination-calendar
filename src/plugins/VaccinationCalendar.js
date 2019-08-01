@@ -13,7 +13,9 @@ const VaccinationCalendarPlugin = {
       animateFill: false,
       trigger: 'mouseenter',
       maxWidth: 300,
-      interactive: true
+      interactive: true,
+      delay: [0, 0],
+      duration: [0, 0]
     });
   },
 }

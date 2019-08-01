@@ -18,7 +18,7 @@
 
 
 .arrow {
-    font-size: 10px;
+    font-size: 23px;
     position: relative;
     height: 5px;
     background: currentColor;
@@ -29,21 +29,34 @@
         position: absolute;
         top: 50%;
         transform: translateY(-50%);
-        left: 100%;
-        border: 1em solid;
-        border-color: transparent transparent transparent currentColor;
+        right: -0.2em;
+        width: 0.5em;
+        height: 1em;
+        background-position: 50% 50%;
+        background-repeat: no-repeat;
+        background-size: contain;
+        z-index: 1;
     }
 
     &.light {
         color: $color-arrow-light;
+        &:before {
+            background-image: url(../images/angle-round-light.svg);
+        }
     }
 
     &.dark {
         color: $color-arrow-dark;
+        &:before {
+            background-image: url(../images/angle-round-dark.svg);
+        }
     }
 
     &.inactive {
         color: $color-border;
+        &:before {
+            background-image: url(../images/angle-round-mute.svg);
+        }
     }
 }
 
@@ -99,22 +112,6 @@
 }
 
 .to {
-    font-size: 10px;
     flex: 0 0 50%;
-    margin: 0 auto 0 -1em;
-
-    &--next {
-        margin-right: 1em;
-    }
-
-    //&:before {
-    //    content: '';
-    //    display: block;
-    //    position: absolute;
-    //    top: 50%;
-    //    transform: translateY(-50%);
-    //    left: 100%;
-    //    border: 1em solid;
-    //    border-color: transparent transparent transparent currentColor;
-    //}
+    margin: 0 auto 0 0;
 }
