@@ -10,7 +10,7 @@
           <template v-for="term in terms">
             <div class="symbol"
                  :content="term.title"
-                 v-tippy="{ trigger: 'mouseenter', maxWidth: 300 }"
+                 v-tippy
                  :class="term.className">
             </div>
           </template>

@@ -31,7 +31,7 @@
                   <img :src="require(`../assets/images/${getIcon(icon).image}.svg`)"
                        class="tbl__cell-icon"
                        :content="getIcon(icon).name"
-                       v-tippy="{ trigger: 'click', maxWidth: 300 }"
+                       v-tippy
                        v-for="icon in item.icons.split(' ')">
                 </div>
               </template>
@@ -44,7 +44,7 @@
                 <span class="tbl__cell-name-text"
                       :content="item.hint.html"
                       v-html="item.name"
-                      v-tippy="{ maxWidth: 300, trigger: 'click' }">
+                      v-tippy>
                 </span>
                 <span class="sup" v-if="item.note">{{ item.note }}</span>
               </div>
@@ -88,7 +88,7 @@
         <img :src="require(`../assets/images/${icon.image}.svg`)"
              content="Ipsum"
              :content="icon.name"
-             v-tippy="{ trigger: 'click', maxWidth: 300 }"
+             v-tippy
              class="icons-description__item icons-set">
       </template>
     </div>

@@ -9,7 +9,11 @@ const VaccinationCalendarPlugin = {
   install(Vue, options = {}) {
     const opts = Object.assign({}, defaultOptions, options);
     Vue.component(opts.componentName, Calendar);
-    Vue.use(VueTippy);
+    Vue.use(VueTippy, {
+      animateFill: false,
+      trigger: 'mouseenter',
+      maxWidth: 300
+    });
   },
 }
 
