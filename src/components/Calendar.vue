@@ -37,16 +37,14 @@
               </template>
             </div>
             <div class="tbl__cell tbl__cell-name"
-                 :class="{ 'muted': activeRow !== null && activeRow !== idx }"
+                 :class="{ 'active': activeRow === idx }"
                  @mouseleave="activeRow = null"
                  @mouseenter="activeRow = idx">
-              <div class="tbl__cell-name-inner">
-                <span class="tbl__cell-name-text"
-                      :content="getItemTooltip(item)"
-                      v-html="item.name"
-                      v-tippy="{ trigger: 'click' }">
-                </span>
-                <span class="sup" v-if="item.note">{{ item.note }}</span>
+              <div class="tbl__cell-name-inner"
+                   :content="getItemTooltip(item)"
+                   v-tippy="{ trigger: 'click' }">
+                <span class="tbl__cell-name-text" v-html="item.name"></span>
+                <span class="sup" v-if="item.note" v-html="item.note"></span>
               </div>
             </div>
           </div>

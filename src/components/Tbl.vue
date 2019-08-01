@@ -139,15 +139,18 @@
   }
 
   .tbl__cell-name-text {
-    cursor: pointer;
-    &:hover {
-      color: $color-arrow-light;
-    }
   }
 
   .tbl__cell-name-inner {
-    *.muted > & {
-      color: $color-border;
+    *.active > & {
+      color: $color-arrow-light;
+    }
+
+    outline: none;
+    cursor: pointer;
+    &:hover,
+    &:focus {
+      color: $color-arrow-light;
     }
 
     .sup {
