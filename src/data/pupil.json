@@ -29,7 +29,7 @@
       "note": "",
       "hint": {
         "html": "Вакцина: живая ослабленная бактерия.",
-        "link": ""
+        "link": "https://chaika.com/what-do-we-treat/diseases/tuberkulez"
       },
       "items": [{ "title": "REVAC", "items": ["6", "7"] }]
     },
@@ -92,7 +92,7 @@
       "note": "",
       "hint": {
         "html": "Вакцина: убитая, содержит микрочастицы 3&nbsp;подтипов вируса.",
-        "link": ""
+        "link": "https://chaika.com/what-do-we-treat/diseases/gripp-u-detei"
       },
       "items": [{ "title": "ANNUAL", "items": ["6", "100500"] }]
     },
@@ -110,7 +110,7 @@
       "note": "3,4",
       "hint": {
         "html": "Вакцина: убитая, защищает от&nbsp;наиболее распространенных серотипов бактерии.",
-        "link": ""
+        "link": "https://chaika.com/what-do-we-treat/diseases/meningokokkovaia-infektsiia-u-detei"
       },
       "items": [{ "epid": true, "items": ["6", " 100500"] }]
     },
@@ -128,7 +128,7 @@
       "note": "3,6",
       "hint": {
         "html": "Вакцина: убитый вирус.",
-        "link": ""
+        "link": "https://chaika.com/what-do-we-treat/diseases/kleshchevoi-entsefalit"
       },
       "items": [{ "epid": true, "items": ["6", "100500"] }]
     },
@@ -137,7 +137,7 @@
       "note": "3,7",
       "hint": {
         "html": "Вакцина: живая ослабленная.",
-        "link": ""
+        "link": "https://chaika.com/what-do-we-treat/diseases/vetrianaia-ospa-u-detei"
       },
       "items": [{ "epid": true, "items": ["6", "100500"] }]
     }

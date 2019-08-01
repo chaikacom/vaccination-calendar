@@ -20,3 +20,11 @@
     font-size: 14px;
     line-height: 1.5em;
 }
+
+.tooltip-link {
+    color: $color-arrow-light;
+
+    .tooltip-text + & {
+        margin-top: 10px;
+    }
+}

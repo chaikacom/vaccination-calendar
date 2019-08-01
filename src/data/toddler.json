@@ -109,7 +109,7 @@
       "note": "",
       "hint": {
         "html": "Грипп быстро распространяется от&nbsp;человека к&nbsp;человеку, может вызвать лихорадку, пневмонию, опасен осложнениями. Вакцина: убитая, содержит микрочастицы 3&nbsp;подтипов вируса.",
-        "link": ""
+        "link": "https://chaika.com/what-do-we-treat/diseases/gripp-u-detei"
       },
       "items": [{ "title": "ANNUAL", "items": ["0/12", "100500"] }]
     },
@@ -136,7 +136,7 @@
       "note": "5,7",
       "hint": {
         "html": "Менингококк&nbsp;&mdash; одна из&nbsp;частых причин менингита или сепсиса. Болезнь может унести жизнь ребенка за&nbsp;24&nbsp;часа. Вакцина: убитая, защищает от&nbsp;наиболее распространенных серотипов бактерии.",
-        "link": ""
+        "link": " https://chaika.com/what-do-we-treat/diseases/meningokokkovaia-infektsiia-u-detei"
       },
       "items": [{ "epid": true, "items": ["0/12", "100500"] }]
     },
@@ -145,7 +145,7 @@
       "note": "5,8",
       "hint": {
         "html": "Клещевой энцефалит передается при укусе инфицированного клеща, развивается менингит и/или энцефалит. Вакцина: убитый вирус.",
-        "link": ""
+        "link": "https://chaika.com/what-do-we-treat/diseases/kleshchevoi-entsefalit"
       },
       "items": [{ "epid": true, "items": ["0/12", "100500"] }]
     },
@@ -154,7 +154,7 @@
       "note": "5,9",
       "hint": {
         "html": "Ветряная оспа проявляется в&nbsp;виде зудящей сыпи (у&nbsp;детей) или болезненного опоясывающего герпеса (у&nbsp;взрослых). Вакцина: живая ослабленная.",
-        "link": ""
+        "link": "https://chaika.com/what-do-we-treat/diseases/vetrianaia-ospa-u-detei"
       },
       "items": [{ "epid": true, "items": ["0/12", "100500"] }]
     }

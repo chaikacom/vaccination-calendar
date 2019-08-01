@@ -171,7 +171,7 @@
       "icons": "WORK_INFECT LIVE_TERR VISIT_TERR",
       "hint": {
         "html": "Вакцина: убитый вирус.",
-        "link": ""
+        "link": "https://chaika.com/what-do-we-treat/diseases/kleshchevoi-entsefalit"
       },
       "items": [{ "epid": true, "items": ["55", "100500"] }]
     },

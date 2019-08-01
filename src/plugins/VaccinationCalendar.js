@@ -12,7 +12,8 @@ const VaccinationCalendarPlugin = {
     Vue.use(VueTippy, {
       animateFill: false,
       trigger: 'mouseenter',
-      maxWidth: 300
+      maxWidth: 300,
+      interactive: true
     });
   },
 }

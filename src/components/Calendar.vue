@@ -42,9 +42,9 @@
                  @mouseenter="activeRow = idx">
               <div class="tbl__cell-name-inner">
                 <span class="tbl__cell-name-text"
-                      :content="item.hint.html"
+                      :content="getItemTooltip(item)"
                       v-html="item.name"
-                      v-tippy>
+                      v-tippy="{ trigger: 'click' }">
                 </span>
                 <span class="sup" v-if="item.note">{{ item.note }}</span>
               </div>
@@ -250,6 +250,10 @@
     },
 
     methods: {
+      getItemTooltip(item) {
+        const more = item.hint.link ? `<br/> <a href="${item.hint.link}" class="tooltip-link" target="_blank">Подробнее</a>` : '';
+        return `<div class="tooltip-text">${item.hint.html}</div>${more}`;
+      },
       changePerson(dir) {
         const idx = this.dataset.findIndex(data => data.id === this.age);
         const prev = idx - 1;
