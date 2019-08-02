@@ -9,9 +9,9 @@
         <div class="value-wrapper" v-if="terms">
           <template v-for="term in terms">
             <div class="symbol"
-                 :content="term.title"
-                 v-tippy
+                 v-tippy="{ html: `#term_${rowIndex}_${offset}` }"
                  :class="term.className">
+              <div style="display: none" :id="`term_${rowIndex}_${offset}`" v-html="term.title"></div>
             </div>
           </template>
         </div>

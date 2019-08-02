@@ -30,8 +30,7 @@
                 <div class="icons-set icons-set--sm">
                   <img :src="require(`../assets/images/${getIcon(icon).image}.svg`)"
                        class="tbl__cell-icon"
-                       :content="getIcon(icon).name"
-                       v-tippy
+                       v-tippy="{ html: `#icon_${getIcon(icon).image}` }"
                        v-for="icon in item.icons.split(' ')">
                 </div>
               </template>
@@ -41,10 +40,10 @@
                  @mouseleave="activeRow = null"
                  @mouseenter="activeRow = idx">
               <div class="tbl__cell-name-inner"
-                   :content="getItemTooltip(item)"
-                   v-tippy="{ trigger: 'click' }">
+                   v-tippy="{ html: `#name_${idx}` }">
                 <span class="tbl__cell-name-text" v-html="item.name"></span>
                 <span class="sup" v-if="item.note" v-html="item.note"></span>
+                <div style="display: none" :id="`name_${idx}`" v-html="getItemTooltip(item)"></div>
               </div>
             </div>
           </div>
@@ -85,9 +84,9 @@
       <template v-for="icon in icons">
         <img :src="require(`../assets/images/${icon.image}.svg`)"
              content="Ipsum"
-             :content="icon.name"
-             v-tippy
+             v-tippy="{ html: `#icon_${icon.image}` }"
              class="icons-description__item icons-set">
+        <div style="display: none" :id="`icon_${icon.image}`" v-html="icon.name"></div>
       </template>
     </div>
 
@@ -309,7 +308,7 @@
       Vue.use(VueTippy, {
         animateFill: false,
         trigger: 'mouseenter',
-        maxWidth: 300,
+        maxWidth: '300px',
         interactive: true,
         delay: [0, 0],
         duration: [0, 0]
