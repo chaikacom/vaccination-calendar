@@ -24,7 +24,7 @@
     <div class="grid">
       <div class="grid__aside">
         <div class="tbl" ref="tableHeight">
-          <div class="tbl__row" v-for="(item, idx) in items">
+          <div class="tbl__row" v-for="(item, idx) in items" :key="`${age}_${idx}`">
             <div class="tbl__cell tbl__cell-icons">
               <template v-if="item.icons">
                 <div class="icons-set icons-set--sm">
@@ -40,10 +40,11 @@
                  @mouseleave="activeRow = null"
                  @mouseenter="activeRow = idx">
               <div class="tbl__cell-name-inner"
-                   v-tippy="{ html: `#name_${idx}` }">
+                   v-tippy="{ html: `#name_${age}_${idx}` }">
                 <span class="tbl__cell-name-text" v-html="item.name"></span>
                 <span class="sup" v-if="item.note" v-html="item.note"></span>
-                <div style="display: none" :id="`name_${idx}`" v-html="getItemTooltip(item)"></div>
+                <div style="display: none" :id="`name_${age}_${idx}`" v-html="getItemTooltip(item)">
+                </div>
               </div>
             </div>
           </div>
