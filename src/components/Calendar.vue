@@ -480,7 +480,7 @@
   }
 
   .draggable {
-    cursor: grab;
+    /*cursor: grab;*/
   }
 
   .notes {
