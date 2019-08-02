@@ -133,6 +133,7 @@
 </template>
 
 <script>
+  import Vue from 'vue';
   import '../assets/stylesheets/index.scss';
   import '../assets/stylesheets/elements/tippy.scss';
   import * as parser from '../chart/parser';
@@ -143,6 +144,7 @@
   import Hammer from 'hammerjs';
   import ScrollBooster from 'scrollbooster';
   import browserMixin from '../mixins/browser';
+  import VueTippy from 'vue-tippy';
 
   const dataset = dataJSON.map(prepareData);
   const digitsRegexp = /\d+(.\d+)?/g;
@@ -174,7 +176,7 @@
     return Object.assign({}, data, { range, items: rows, headers });
   }
 
-  export default {
+  let component = {
     components: { Tbl },
     mixins: [ browserMixin ],
     data() {
@@ -299,6 +301,23 @@
       }
     },
   };
+
+  component = Vue.extend(component);
+
+  component.use({
+    install() {
+      Vue.use(VueTippy, {
+        animateFill: false,
+        trigger: 'mouseenter',
+        maxWidth: 300,
+        interactive: true,
+        delay: [0, 0],
+        duration: [0, 0]
+      });
+    },
+  });
+
+  export default component;
 </script>
 
 <style lang="scss">

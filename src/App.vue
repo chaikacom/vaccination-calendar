@@ -8,6 +8,8 @@
 import 'normalize.css';
 
 export default {
-  components: {},
+  components: {
+    'vaccination-calendar': () => import(/* webpackChunkName: "Calendar" */  './components/Calendar.vue')
+  },
 };
 </script>

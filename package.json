@@ -6,7 +6,7 @@
   "scripts": {
     "serve": "vue-cli-service serve",
     "build": "vue-cli-service build",
-    "lib": "vue-cli-service build --target lib --name calendar ./src/plugins/VaccinationCalendar.js --dest ./dist",
+    "lib": "vue-cli-service build --target lib --name calendar ./src/components/Calendar.vue --dest ./dist",
     "lint": "vue-cli-service lint"
   },
   "dependencies": {
