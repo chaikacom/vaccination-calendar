@@ -470,7 +470,7 @@
   .persons__item {
     cursor: pointer;
     color: $color-icons;
-    width: 145px;
+    width: 155px;
     text-align: center;
 
     &--active {
