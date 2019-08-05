@@ -229,7 +229,7 @@
 
   .legend {
     display: block;
-    margin: 0;
+    margin: 50px 0;
     list-style: none;
     padding: 0;
     max-width: 860px;

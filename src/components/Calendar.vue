@@ -81,16 +81,6 @@
       </div>
     </div>
 
-    <div class="icons-description icons-set">
-      <template v-for="icon in icons">
-        <img :src="require(`../assets/images/${icon.image}.svg`)"
-             content="Ipsum"
-             v-tippy="{ html: `#icon_${icon.image}` }"
-             class="icons-description__item icons-set">
-        <div style="display: none" :id="`icon_${icon.image}`" v-html="icon.name"></div>
-      </template>
-    </div>
-
     <ul class="legend">
       <li class="legend__item" v-for="line in legend">
         <div class="legend__item-symbol">
@@ -99,6 +89,18 @@
         <div class="legend__item-text" v-html="line.text"></div>
       </li>
     </ul>
+
+    <div class="icons-description">
+      <div class="icons-set">
+        <template v-for="icon in availableIcons">
+          <img :src="require(`../assets/images/${icon.image}.svg`)"
+               content="Ipsum"
+               v-tippy="{ html: `#icon_${icon.image}` }"
+               class="icons-description__item icons-set" :key="`icon_${age}_${icon.image}`">
+          <div style="display: none" :id="`icon_${icon.image}`" v-html="icon.name" :key="`tooltip_${age}_${icon.name}`"></div>
+        </template>
+      </div>
+    </div>
 
     <div class="notes" :class="{ 'is-open': showNotes }" v-if="data.notes">
       <h3 class="notes__title" @click="showNotes = !showNotes">
@@ -197,6 +199,21 @@
     },
 
     computed: {
+      availableIcons() {
+        const all = this.data.items.reduce((acc, value) => {
+          if (value.icons) acc.push(value.icons);
+          return acc;
+        }, [])
+        if (!all.length) return [];
+        return all
+          .join(' ')
+          .split(' ')
+          .reduce((acc, value) => {
+            if (acc.indexOf(value) < 0) acc.push(value);
+            return acc;
+          }, [])
+          .map(code => this.icons.find(i => i.code === code));
+      },
       data() {
         return this.dataset.find(item => item.id === this.age);
       },
