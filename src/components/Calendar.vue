@@ -36,7 +36,7 @@
               </template>
             </div>
             <div class="tbl__cell tbl__cell-name"
-                 :class="{ 'active': activeRow === idx }"
+                 :class="{ 'active': activeRow === idx, 'inactive': activeRows.length && (activeRows.indexOf(idx) < 0)  }"
                  @mouseleave="activeRow = null"
                  @mouseenter="activeRow = idx">
               <div class="tbl__cell-name-inner"
@@ -72,6 +72,7 @@
                :widths="widths"
                :rows="items"
                :active-row="activeRow"
+               @rowactivate="activeRows = $event"
                @rowchange="activeRow = $event"
                :range="range"
                :active="active"
@@ -194,6 +195,7 @@
         activeRow: null,
         showNotes: false,
         widths: [],
+        activeRows: [],
         documentLink
       }
     },

@@ -28,11 +28,29 @@
 
     data() {
       return {
-        term: null
+        term: null,
+      }
+    },
+
+    watch: {
+      active() {
+        this.$emit('rowactivate', this.activeRows);
       }
     },
 
     computed: {
+      activeRows() {
+        if (!this.active) return [];
+        const indexes = this.terms.reduce((acc, row, index) => {
+          const hasActive = row.find((item, idx) => {
+            if (!item) return false;
+            return item.find(i => i.isActive)
+          });
+          if (hasActive) acc.push(index)
+          return acc;
+        }, [])
+        return indexes;
+      },
       terms() {
         return this.rows.map((row, rowIndex) => {
           return this.headers.map((header, headerIndex) => {
@@ -51,10 +69,10 @@
         const hasHover = this.activeRow !== null;
         const hasActive = this.active !== null;
         let activityClass = '';
+        const isActive = hasActive && term.contains(this.active.value);
+        const isHovered = hasHover && this.activeRow === rowIndex;
 
         if (hasActive || hasHover) {
-          const isActive = hasActive && term.contains(this.active.value);
-          const isHovered = hasHover && this.activeRow === rowIndex;
           activityClass = !isActive && !isHovered ? ' inactive ' : '';
         }
 
@@ -62,6 +80,7 @@
         const colorClass = term.epid ? 'light' : 'dark';
 
         return {
+          isActive,
           title: term.title,
           className: `${mainClass} ${colorClass} ${activityClass}`,
         }
@@ -150,6 +169,10 @@
   }
 
   .tbl__cell-name-inner {
+    *.inactive > & {
+      color: $color-border;
+    }
+
     *.active > & {
       color: $color-arrow-light;
     }
