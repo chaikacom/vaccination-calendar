@@ -548,7 +548,7 @@
 
   .notes-list__text {
     display: block;
-    padding-left: 15px;
+    padding-left: 20px;
   }
 
   .document {
