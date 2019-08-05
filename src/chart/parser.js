@@ -57,7 +57,7 @@ export function getAllValues(terms, range) {
       if (!isExists) acc.push(term);
       return acc;
     }, [])
-    .sort((a, b) => (a.value < b.value ? -1 : 0))
+    .sort((a, b) => (a.value - b.value))
     .filter(term => range.contains(term.value));
 }
 
