@@ -14,6 +14,12 @@ module.exports = {
     extract: (mode === 'development') || isLib ? false : true,
   },
   chainWebpack: (config) => {
+    const svgInline = config.module.rule('svg-inline');
+    svgInline
+      .test(/\.svg-inline$/)
+      .use('svg-inline-loader')
+      .loader('svg-inline-loader');
+
     if (isLib) {
       const svg = config.module.rule('svg');
       const fonts = config.module.rule('fonts');

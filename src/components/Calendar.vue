@@ -8,14 +8,15 @@
              @click="age = person.id"
              :class="{ 'persons__item--active': person.id === age }"
              v-for="person in dataset">
-          <div class="persons__item-icon">
-            <svg class="person" v-if="!IEVersion">
-              <use :xlink:href="require(`../assets/images/persons.svg`) + `#${person.id}`"></use>
-            </svg>
-            <template v-else>
-              <img :src="require(`../assets/images/persons/${person.id}.svg`)">
-            </template>
-          </div>
+          <div class="persons__item-icon" v-html="getPersonImage(person)"></div>
+          <!--<div class="persons__item-icon">-->
+            <!--<svg class="person" v-if="!IEVersion">-->
+              <!--<use :xlink:href="require(`../assets/images/persons.svg`) + `#${person.id}`"></use>-->
+            <!--</svg>-->
+            <!--<template v-else>-->
+              <!--<img :src="require(`../assets/images/persons/${person.id}.svg`)">-->
+            <!--</template>-->
+          <!--</div>-->
           <div class="persons__item-label" v-html="person.label"></div>
         </div>
       </div>
@@ -269,6 +270,9 @@
     },
 
     methods: {
+      getPersonImage(person) {
+        return require(`../assets/images/inline/${person.id}.svg-inline`);
+      },
       getItemTooltip(item) {
         const more = item.hint.link ? `<br/> <a href="${item.hint.link}" class="tooltip-link" target="_blank">Подробнее</a>` : '';
         return `<div class="tooltip-text">${item.hint.html}</div>${more}`;
@@ -487,6 +491,8 @@
     margin-bottom: 15px;
     * {
       font-size: 100px;
+      width: 1em;
+      height: 1em;
       vertical-align: top;
     }
   }
